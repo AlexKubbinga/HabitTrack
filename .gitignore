@@ -1,0 +1,5 @@
+#ENV
+.env
+
+#Oura API Details
+openapi.json
