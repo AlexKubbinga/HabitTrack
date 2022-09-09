@@ -56,7 +56,7 @@ const main = async () => {
   getAvgScoreByWeek();
 };
 
-function getAvgScoreByWeek() {
+function getAvgByWeek(metric) {
   //store in object with week as key and value as score
   // To find the average by week one needs to:
   // identify the week of the given OuraDataObject
@@ -71,16 +71,17 @@ function getAvgScoreByWeek() {
   let week;
   for (const day of db) {
     week = getWeek(day.timestamp);
-    console.log(`${day.timestamp} + week: ${week} + score ${day.score}`);
+    console.log(`${day.timestamp} + week: ${week} + metric ${day.metric}`);
     if (!weekData[week]) {
-      weekData[week] = day.score;
+      //if metric is actually 0 it will skip it (ex:active calories was 0 one day)
+      weekData[week] = day.metric;
       if (weekData[priorWeek]) {
         weekData[priorWeek] = weekData[priorWeek] / daysCounter;
       }
       priorWeek = week;
       daysCounter = 1;
     } else {
-      weekData[week] += day.score;
+      weekData[week] += day.metric;
       daysCounter += 1;
     }
   }
