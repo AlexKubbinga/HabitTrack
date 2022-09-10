@@ -1,23 +1,42 @@
 import logo from './logo.svg';
 import './App.css';
+import { useState, useEffect } from 'react';
+import { getPersonalInfo, getScoreByMonth } from './apiClient';
+import ActivityChart from './ActivityChart';
+// import { getScoreByMonth } from './utils/activity';
 
 function App() {
+  const [day, setDay] = useState([]);
+  const [details, setDetails] = useState([]);
+
+  useEffect(() => {
+    getScoreByMonth().then((res) => {
+      setDay(res);
+    });
+
+    getPersonalInfo().then((res) => {
+      setDetails(res);
+    });
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+      <div id="Hello">
+        <h1> Hello {details.email}</h1>
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          You are {details.age} years old, weighing {details.weight}kg and
+          {details.height}m tall.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      </div>
+      <ActivityChart data={day}></ActivityChart>
+      {day.map((month) => {
+        return (
+          <div key={month.month}>
+            <h1>{month.value}</h1>
+            <h2> {month.month}</h2>
+          </div>
+        );
+      })}
     </div>
   );
 }

@@ -1,8 +1,8 @@
 require('dotenv').config('./.env');
-const luxon = require('luxon');
+const { DateTime } = require('luxon');
 
-const PAT = process.env.PAT;
-//
+const PAT = 'N7XEZ52OBLWB4VEOHLLCWJW3JNQ3W7PX';
+console.log('here,', PAT);
 
 var myHeaders = new Headers();
 
@@ -25,7 +25,7 @@ var requestOptions = {
 
 // YYYY-MM-DD
 // console.log(new Date().toISOString().substring(0, 10));
-const start_date = '2022-08-01';
+const start_date = '2022-01-01';
 const end_date = '2022-09-01';
 const v1 = `https://api.ouraring.com/v1/activity?start=${start_date}&end=${end_date}`;
 const v2 = `https://api.ouraring.com/v2/usercollection/daily_activity?start_date=${start_date}&end_date=${end_date}`;
@@ -49,14 +49,47 @@ const main = async () => {
   // console.log(JSON.parse(dailyActivity2));
   console.log('success');
   const augData = JSON.parse(dailyActivity2).data;
-  for (let i = 0; i < augData.length; i++) {
-    const day = augData[i];
-    db.push(day);
-  }
-  getAvgScoreByWeek();
+  // for (let i = 0; i < augData.length; i++) {
+  //   const day = augData[i];
+  //   db.push(day);
+  // }
+  // getAvgScoreByWeek();
+  getAvgByWeek(augData, 'score');
 };
 
-function getAvgByWeek(metric) {
+function getAvgByMonth(data, metric) {
+  const monthData = {};
+  let daysCounter;
+  let priorMonth;
+  let month;
+  for (const day of data) {
+    month = DateTime.fromISO(day.timestamp).monthLong;
+    // console.log(`${day.timestamp} + week: ${month} + metric ${day[metric]}`);
+    if (!monthData[month]) {
+      monthData[month] = day[metric];
+      if (monthData[priorMonth]) {
+        monthData[priorMonth] = monthData[priorMonth] / daysCounter;
+      }
+      priorMonth = month;
+      daysCounter = 1;
+    } else {
+      monthData[month] += day[metric];
+      daysCounter += 1;
+    }
+  }
+  monthData[month] = monthData[month] / daysCounter;
+  const final = [];
+  for (const [month, value] of Object.entries(monthData)) {
+    const temp = {};
+    temp['month'] = month;
+    temp['value'] = value;
+    final.push(temp);
+  }
+  console.log(final);
+  return final;
+}
+
+function getAvgByWeek(data, metric) {
   //store in object with week as key and value as score
   // To find the average by week one needs to:
   // identify the week of the given OuraDataObject
@@ -65,36 +98,40 @@ function getAvgByWeek(metric) {
   // therefore use a counter and prior week variable to determine correct average
   // a prior week is needed as user may not wear ring for a week
   const weekData = {};
-  let totalScore;
+  const weekFinal = [];
   let daysCounter;
   let priorWeek;
   let week;
-  for (const day of db) {
+  for (const day of data) {
     week = getWeek(day.timestamp);
-    console.log(`${day.timestamp} + week: ${week} + metric ${day.metric}`);
+    console.log(`${day.timestamp} + week: ${week} + metric ${day[metric]}`);
     if (!weekData[week]) {
       //if metric is actually 0 it will skip it (ex:active calories was 0 one day)
-      weekData[week] = day.metric;
+      weekData[week] = day[metric];
       if (weekData[priorWeek]) {
         weekData[priorWeek] = weekData[priorWeek] / daysCounter;
       }
       priorWeek = week;
       daysCounter = 1;
     } else {
-      weekData[week] += day.metric;
+      weekData[week] += day[metric];
       daysCounter += 1;
     }
   }
   // fix for last value
   weekData[week] = weekData[week] / daysCounter;
-  console.log(
-    '-------------- GETTING AVERAGE SCORE BY WEEK -------------------'
-  );
-  console.log(weekData);
+  for (const [week, value] of Object.entries(weekData)) {
+    const temp = {};
+    temp['weekNumber'] = week;
+    temp['value'] = value;
+    weekFinal.push(temp);
+  }
+  console.log(weekFinal);
+  return weekFinal;
 }
 
 function getWeek(timestamp) {
-  const dt = luxon.DateTime.fromISO(timestamp);
+  const dt = DateTime.fromISO(timestamp);
   // console.log(dt.weekNumber);
   return dt.weekNumber;
 }
@@ -102,5 +139,7 @@ function getWeek(timestamp) {
 // getWeek();
 
 main();
+
+// console.log(DateTime.fromISO('2022-08-21T04:00:00+01:00').weekNumber);
 
 module.exports = db;
