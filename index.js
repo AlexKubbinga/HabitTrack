@@ -1,14 +1,11 @@
-require('dotenv').config('./.env');
+require('dotenv').config();
 const { DateTime } = require('luxon');
 
-const PAT = 'N7XEZ52OBLWB4VEOHLLCWJW3JNQ3W7PX';
-console.log('here,', PAT);
+const PAT = process.env.PAT;
 
 var myHeaders = new Headers();
 
 myHeaders.append('Authorization', `Bearer ${PAT}`);
-myHeaders.get('Authorization');
-console.log(myHeaders.get('Authorization'));
 
 var requestOptions = {
   method: 'GET',
@@ -25,7 +22,7 @@ var requestOptions = {
 
 // YYYY-MM-DD
 // console.log(new Date().toISOString().substring(0, 10));
-const start_date = '2022-01-01';
+const start_date = '2022-08-01';
 const end_date = '2022-09-01';
 const v1 = `https://api.ouraring.com/v1/activity?start=${start_date}&end=${end_date}`;
 const v2 = `https://api.ouraring.com/v2/usercollection/daily_activity?start_date=${start_date}&end_date=${end_date}`;

@@ -1,4 +1,8 @@
-const PAT = 'N7XEZ52OBLWB4VEOHLLCWJW3JNQ3W7PX'; // multiple users could pull key from DB
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
+console.log(path.resolve(__dirname, '../../.env'));
+const PAT = process.env.PAT; // multiple users could pull key from DB
+
 var myHeaders = new Headers();
 myHeaders.append('Authorization', `Bearer ${PAT}`);
 var requestOptions = {
@@ -19,6 +23,7 @@ const getDailyActivity = async (req, res) => {
     )
       .then((response) => response.json())
       .catch((error) => console.log('error', error)); // error handling for updating app etc
+    console.log('here', body);
     res.status = 200;
     res.send(body);
   } catch (error) {
@@ -39,5 +44,11 @@ const getPersonalInfo = async (req, res) => {
     console.log('There is an error in getting: ', error);
   }
 };
+
+// const main = async () => {
+//   const a = await getDailyActivity();
+//   console.log(a);
+// };
+// main();
 
 module.exports = { getDailyActivity, getPersonalInfo };
