@@ -1,6 +1,5 @@
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
-console.log(path.resolve(__dirname, '../../.env'));
 const PAT = process.env.PAT; // multiple users could pull key from DB
 
 var myHeaders = new Headers();

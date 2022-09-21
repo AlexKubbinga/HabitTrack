@@ -25,8 +25,9 @@ var requestOptions = {
 const start_date = '2022-08-01';
 const end_date = '2022-09-01';
 const v1 = `https://api.ouraring.com/v1/activity?start=${start_date}&end=${end_date}`;
-const v2 = `https://api.ouraring.com/v2/usercollection/daily_activity?start_date=${start_date}&end_date=${end_date}`;
+const v2 = `https://api.ouraring.com/v2/usercollection/daily_activity?start_date=2022-09-01`;
 //v1 is inclusive of end-date, v2 is not inclusive of end-date
+// start_date=${start_date}&end_date=${end_date}?
 
 function getDailyActivity(version) {
   var requestOptions = {
@@ -51,7 +52,8 @@ const main = async () => {
   //   db.push(day);
   // }
   // getAvgScoreByWeek();
-  getAvgByWeek(augData, 'score');
+  console.log(augData);
+  // getAvgByWeek(augData, 'score');
 };
 
 function getAvgByMonth(data, metric) {
@@ -128,9 +130,7 @@ function getAvgByWeek(data, metric) {
 }
 
 function getWeek(timestamp) {
-  const dt = DateTime.fromISO(timestamp);
-  // console.log(dt.weekNumber);
-  return dt.weekNumber;
+  return DateTime.fromISO(timestamp).weekNumber;
 }
 
 // getWeek();
