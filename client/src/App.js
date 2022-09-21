@@ -9,18 +9,23 @@ function App() {
   const [day, setDay] = useState([]);
   const [details, setDetails] = useState([]);
 
-  useEffect(() => {
-    getScoreByMonth().then((res) => {
-      setDay(res);
-    });
+  // useEffect(() => {
+  //   getScoreByMonth().then((res) => {
+  //     setDay(res);
+  //   });
 
-    getPersonalInfo().then((res) => {
-      setDetails(res);
-    });
-  }, []);
+  //   getPersonalInfo().then((res) => {
+  //     setDetails(res);
+  //   });
+  // }, []);
 
   return (
     <div className="App">
+      <div className="nav-bar">
+        <div>Dashboard</div>
+        <div>Habits</div>
+        <div>Create Habit</div>
+      </div>
       <div id="Hello">
         <h1> Hello {details.email}</h1>
         <p>
