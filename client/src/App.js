@@ -20,7 +20,6 @@ function App() {
     <>
       <div className="App">
         <Navbar />
-
         <Routes>
           <Route path="/" element={<Dashboard />}></Route>
           <Route path="/habits" element={<HabitsTable />}></Route>
