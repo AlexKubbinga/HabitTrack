@@ -1,20 +1,20 @@
 import '../App.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ActivityChart from './ActivityChart';
+import { getPersonalInfo } from '../apiService';
 
 function Dashboard() {
   const [details, setDetails] = useState([]);
   const [day, setDay] = useState([]);
 
-  // useEffect(() => {
-  //   getScoreByMonth().then((res) => {
-  //     setDay(res);
-  //   });
-
-  //   getPersonalInfo().then((res) => {
-  //     setDetails(res);
-  //   });
-  // }, []);
+  useEffect(() => {
+    //   getScoreByMonth().then((res) => {
+    //     setDay(res);
+    //   });
+    getPersonalInfo().then((res) => {
+      setDetails(res);
+    });
+  }, []);
 
   return (
     <div>

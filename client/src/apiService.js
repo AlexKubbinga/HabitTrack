@@ -12,6 +12,12 @@ export function createHabit(habit) {
     .catch((err) => console.log('error', err));
 }
 
+export function getHabits() {
+  return fetch(`${rootUrl}/habit`)
+    .then((res) => res.json())
+    .catch((err) => console.log('error', err));
+}
+
 export function getPersonalInfo() {
   return fetch(`${rootUrl}/personal_info`)
     .then((response) => response.json())

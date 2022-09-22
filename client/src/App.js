@@ -5,6 +5,7 @@ import { getPersonalInfo, getScoreByMonth } from './apiService';
 import Dashboard from './components/Dashboard';
 import HabitForm from './components/HabitForm';
 import Navbar from './components/Navbar';
+import HabitsTable from './components/HabitsTable';
 // import { getScoreByMonth } from './utils/activity';
 
 function App() {
@@ -12,7 +13,7 @@ function App() {
     <>
       <div className="App">
         <Navbar />
-        <HabitForm />
+        <HabitsTable />
       </div>
     </>
   );

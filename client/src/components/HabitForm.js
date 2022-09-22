@@ -36,8 +36,9 @@ function HabitForm() {
     e.preventDefault();
 
     const res = await createHabit(state);
-    if (res) console.log('HAPPY BIRTHDAY');
-    // setState(initialState);
+    // if (!res) {
+    // }
+    setState(initialState);
 
     // props.setIsAuthenticated(true);
     // auth.login(() => navigate('/profile'));
