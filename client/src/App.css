@@ -26,9 +26,6 @@
   margin-top: 30px;
 }
 
-.nav-bar button:hover {
-  background-color: #FFEBAD;
-}
 
 .createHabit {
   margin-left: 20px;
@@ -53,4 +50,8 @@
   align-items: center;
 }
 
-
+nav {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+}

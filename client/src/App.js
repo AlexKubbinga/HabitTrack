@@ -2,6 +2,13 @@ import logo from './logo.svg';
 import './App.css';
 import { useState, useEffect } from 'react';
 import { getPersonalInfo, getScoreByMonth } from './apiService';
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Link,
+  useParams,
+} from 'react-router-dom';
 import Dashboard from './components/Dashboard';
 import HabitForm from './components/HabitForm';
 import Navbar from './components/Navbar';
@@ -13,7 +20,12 @@ function App() {
     <>
       <div className="App">
         <Navbar />
-        <HabitsTable />
+
+        <Routes>
+          <Route path="/" element={<Dashboard />}></Route>
+          <Route path="/habits" element={<HabitsTable />}></Route>
+          <Route path="/newHabit" element={<HabitForm />}></Route>
+        </Routes>
       </div>
     </>
   );
