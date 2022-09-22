@@ -2,6 +2,16 @@ const { getAvgByMonth } = require('./utils/utils');
 
 const rootUrl = 'http://localhost:3001';
 
+export function createHabit(habit) {
+  return fetch(`${rootUrl}/habit`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(habit),
+  })
+    .then((res) => res.json())
+    .catch((err) => console.log('error', err));
+}
+
 export function getPersonalInfo() {
   return fetch(`${rootUrl}/personal_info`)
     .then((response) => response.json())

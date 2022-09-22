@@ -4,13 +4,20 @@ const { createDateArray } = require('../utils/date');
 const create = async (req, res) => {
   try {
     console.log('creating a new habit');
-    const { start_date, length } = req.body;
+    const { name, start_date, length } = req.body;
+    // already exists check
+    const exists = await Habit.exists({ name });
+    if (exists) {
+      res.status(409).send(false);
+      return;
+    }
+
     const dates = createDateArray(start_date, length);
     const habit = new Habit({ ...req.body, dates });
     console.log(habit);
-    const savedHabit = await habit.save();
+    // const savedHabit = await habit.save();
     res.status = 200;
-    res.send('Habit successfully created');
+    res.send(JSON.stringify(req.body));
   } catch (error) {
     res
       .status(500)

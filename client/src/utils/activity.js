@@ -1,4 +1,4 @@
-const { getDailyActivity } = require('../apiClient');
+const { getDailyActivity } = require('../apiService');
 const { getAvgByMonth } = require('./utils');
 
 async function getScoreByMonth() {
