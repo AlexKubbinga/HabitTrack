@@ -7,7 +7,7 @@ function Dashboard({ details, data }) {
     <div>
       <div id="greeting">
         <h1> Hello {details.email}</h1>
-        <p>
+        <p className="mx-4 font-bold text-blue-300">
           You are {details.age} years old, weighing {details.weight}kg and
           {details.height}m tall.
         </p>

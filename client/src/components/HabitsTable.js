@@ -9,8 +9,9 @@ import Paper from '@mui/material/Paper';
 import { useState, useEffect } from 'react';
 import { getHabits } from '../apiService';
 import { calcHabitProgress } from '../utils/utils';
+import Button from '@mui/material/Button';
 
-function HabitsTable() {
+function HabitsTable({ setMainHabit }) {
   const [habits, setHabits] = useState([]);
 
   useEffect(() => {
@@ -46,10 +47,22 @@ function HabitsTable() {
                   </TableCell>
                   <TableCell align="right">{row.description}</TableCell>
                   <TableCell align="right">{row.start_date}</TableCell>
-                  <TableCell align="right">{row.dates[row.length]}</TableCell>
+                  <TableCell align="right">
+                    {row.dates[row.length - 1]}
+                  </TableCell>
                   <TableCell align="right">{row.length} days</TableCell>
                   <TableCell align="right">
                     {calcHabitProgress(row.start_date, row.length)}%
+                  </TableCell>
+                  <TableCell align="right">
+                    <Button
+                      variant="contained"
+                      onClick={() => {
+                        setMainHabit([row]);
+                      }}
+                    >
+                      Set as main Habit
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}

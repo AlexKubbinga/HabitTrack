@@ -9,6 +9,7 @@ function HabitForm() {
     start_date: '',
     length: 30,
     area_of_improvement: '',
+    main_habit: '',
   };
 
   const [state, setState] = useState(initialState);
@@ -19,7 +20,8 @@ function HabitForm() {
       !state.description ||
       !state.start_date ||
       !state.length ||
-      !state.area_of_improvement
+      !state.area_of_improvement ||
+      !state.main_habit
     );
   };
 
@@ -107,6 +109,25 @@ function HabitForm() {
           onChange={handleChange}
         />
         <label htmlFor="Activity">Activity</label>
+        <p>Do you want to set this as your current habit?</p>
+        <input
+          type="radio"
+          name="main_habit"
+          id="true"
+          value="true"
+          style={{ display: 'inline' }}
+          onChange={handleChange}
+        />
+        <label htmlFor="true">Yes</label>&nbsp;
+        <input
+          type="radio"
+          name="main_habit"
+          id="false"
+          value="false"
+          style={{ display: 'inline' }}
+          onChange={handleChange}
+        />
+        <label htmlFor="false">No</label>
         <br></br>
         <button type="submit" disabled={validateForm()}>
           Submit

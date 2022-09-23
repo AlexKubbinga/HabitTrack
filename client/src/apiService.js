@@ -31,8 +31,13 @@ export function getDailyActivity() {
     .catch((error) => console.log('error', error));
 }
 
-export function getCurrentHabitChartData() {
-  const habitName = 'Running';
+export function getMainHabit() {
+  return fetch(`${rootUrl}/mainHabit`)
+    .then((response) => response.json())
+    .catch((error) => console.log('error', error));
+}
+
+export function getCurrentHabitChartData(habitName = 'Run') {
   const params = new URLSearchParams({
     habit_name: habitName,
   });

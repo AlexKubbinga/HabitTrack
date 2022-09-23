@@ -16,16 +16,16 @@ function ActivityChart({ data }) {
       data={data}
       margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
     >
-      <Line type="monotone" dataKey="baseline" stroke="#8884d8" />
+      <Line type="monotone" dataKey="baseline" stroke="#8884d8" dot={false} />
       <Line type="monotone" dataKey="habit" stroke="#82ca9d" />
-      <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+      {/* <CartesianGrid stroke="#ccc" strokeDasharray="5 5" /> */}
       <XAxis dataKey="y-axis" />
       <YAxis />
       <Tooltip />
     </LineChart>
   );
 
-  return renderLineChart;
+  return <div id="habitChart">{renderLineChart} </div>;
 }
 
 export default ActivityChart;
