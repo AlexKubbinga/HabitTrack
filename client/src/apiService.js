@@ -31,6 +31,17 @@ export function getDailyActivity() {
     .catch((error) => console.log('error', error));
 }
 
+export function getCurrentHabitChartData() {
+  const habitName = 'Same wake and bed time';
+  const params = new URLSearchParams({
+    habit_name: habitName,
+  });
+  const query = params.toString();
+  return fetch(`${rootUrl}/currentHabit?${query}`)
+    .then((res) => res.json())
+    .catch((err) => console.log('error', err));
+}
+
 export async function getScoreByMonth() {
   const data = await getDailyActivity();
   const final = getAvgByMonth(data.data, 'score');

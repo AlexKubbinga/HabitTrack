@@ -1,21 +1,8 @@
 import '../App.css';
-import { useState, useEffect } from 'react';
 import ActivityChart from './ActivityChart';
 import { getPersonalInfo, getScoreByMonth } from '../apiService';
 
-function Dashboard() {
-  const [details, setDetails] = useState([]);
-  const [day, setDay] = useState([]);
-
-  useEffect(() => {
-    getScoreByMonth().then((res) => {
-      setDay(res);
-    });
-    getPersonalInfo().then((res) => {
-      setDetails(res);
-    });
-  }, []);
-
+function Dashboard({ details, data }) {
   return (
     <div>
       <div id="greeting">
@@ -25,7 +12,7 @@ function Dashboard() {
           {details.height}m tall.
         </p>
       </div>
-      <ActivityChart data={day}></ActivityChart>
+      <ActivityChart data={data}></ActivityChart>
     </div>
   );
 }
