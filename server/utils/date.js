@@ -7,6 +7,12 @@ Input:
 - length: integer >0
 Output: dateArray: ["2022-08-28" ... "2022-09-28"] of length equal to length param
 */
+function getEndDate(start_date, length) {
+  const start = new Date(start_date);
+  let end = new Date(start_date);
+  end.setDate(end.getDate() + Number(length - 1));
+  return end.toISOString().slice(0, 10);
+}
 
 function createDateArray(start_date, length) {
   // create end date that is length away
@@ -25,4 +31,4 @@ function createDateArray(start_date, length) {
   return dateArray; // ["2022-08-28" ... "2022-09-28"]
 }
 
-module.exports = { createDateArray };
+module.exports = { createDateArray, getEndDate };

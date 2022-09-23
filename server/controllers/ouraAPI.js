@@ -59,7 +59,7 @@ const getHabitData = async (req, res) => {
 
   // fetch API data
   baseline = await fetch(
-    `${rootUrl}${daily_metric}?start_date=${base_start_date}&end_date=${habit.dates[0]}`,
+    `${rootUrl}${daily_metric}?start_date=${base_start_date}&end_date=${habit.start_date}`,
     requestOptions
   ).then((response) => {
     code = response.status;
@@ -77,8 +77,10 @@ const getHabitData = async (req, res) => {
   const baseline_array = new Array(habit.length).fill(scoreAvg);
   // console.log(baseline_array);
 
+  // will fetch too much data if end_date is before today
+  //TODO
   habitData = await fetch(
-    `${rootUrl}${daily_metric}?start_date=${habit.dates[0]}`,
+    `${rootUrl}${daily_metric}?start_date=${habit.start_date}`,
     requestOptions
   )
     .then((response) => {

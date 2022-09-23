@@ -19,6 +19,10 @@ const habitSchema = new mongoose.Schema({
     required: true,
   },
   dates: [String],
+  end_date: {
+    type: String,
+  },
+  main_habit: { type: Boolean },
 });
 
 module.exports = mongoose.model('Habit', habitSchema);

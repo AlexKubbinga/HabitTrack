@@ -1,5 +1,6 @@
+const habit = require('../models/habit');
 const Habit = require('../models/habit'); // can be used to create habits.
-const { createDateArray } = require('../utils/date');
+const { createDateArray, getEndDate } = require('../utils/date');
 
 const create = async (req, res) => {
   try {
@@ -11,9 +12,9 @@ const create = async (req, res) => {
       res.status(409).send(false);
       return;
     }
-
+    const end_date = getEndDate(start_date, length);
     const dates = createDateArray(start_date, length);
-    const habit = new Habit({ ...req.body, dates });
+    const habit = new Habit({ ...req.body, end_date, dates });
     console.log(habit);
     const savedHabit = await habit.save();
     res.status = 200;
@@ -32,6 +33,7 @@ const get = async (req, res) => {
   try {
     console.log('getting habits');
     const habits = await Habit.find();
+    console.log(habits);
     res.status = 200;
     res.send(habits);
   } catch (error) {
@@ -44,9 +46,23 @@ const get = async (req, res) => {
   }
 };
 
-const getOne = async (habit_name) => {
-  const habit = await Habit.findOne({ name: habit_name });
-  return habit;
+const getMainHabit = async (req, res) => {
+  try {
+    const habits = await Habit.find();
+
+    const result = habits.filter((habitObj) => {
+      return habitObj.main_habit;
+    });
+    res.status = 200;
+    res.send(result);
+  } catch (error) {
+    res
+      .status(500)
+      .send(
+        'There was an error in getting the habits. Sorry thats all we know.'
+      );
+    console.log('ERROR: ', error);
+  }
 };
 
-module.exports = { create, get, getOne };
+module.exports = { create, get, getMainHabit };

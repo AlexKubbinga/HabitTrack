@@ -7,5 +7,6 @@ router.get('/personal_info', ouraController.getPersonalInfo);
 router.post('/habit', habitController.create);
 router.get('/habit', habitController.get);
 router.get('/currentHabit', ouraController.getHabitData);
+router.get('/mainHabit', habitController.getMainHabit);
 
 module.exports = router;
