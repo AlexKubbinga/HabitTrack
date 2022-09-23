@@ -15,7 +15,7 @@ const create = async (req, res) => {
     const dates = createDateArray(start_date, length);
     const habit = new Habit({ ...req.body, dates });
     console.log(habit);
-    // const savedHabit = await habit.save();
+    const savedHabit = await habit.save();
     res.status = 200;
     res.send(JSON.stringify(req.body));
   } catch (error) {
@@ -44,4 +44,9 @@ const get = async (req, res) => {
   }
 };
 
-module.exports = { create, get };
+const getOne = async (habit_name) => {
+  const habit = await Habit.findOne({ name: habit_name });
+  return habit;
+};
+
+module.exports = { create, get, getOne };

@@ -11,14 +11,15 @@ import {
 function ActivityChart({ data }) {
   const renderLineChart = (
     <LineChart
-      width={600}
+      width={1000}
       height={400}
       data={data}
       margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
     >
-      <Line type="monotone" dataKey="value" stroke="#8884d8" />
+      <Line type="monotone" dataKey="baseline" stroke="#8884d8" />
+      <Line type="monotone" dataKey="habit" stroke="#82ca9d" />
       <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-      <XAxis dataKey="month" />
+      <XAxis dataKey="y-axis" />
       <YAxis />
       <Tooltip />
     </LineChart>

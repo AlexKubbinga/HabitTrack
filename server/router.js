@@ -1,10 +1,11 @@
 const router = require('express').Router();
-const { getDailyActivity, getPersonalInfo } = require('./controllers/index');
 const habitController = require('./controllers/habit');
+const ouraController = require('./controllers/ouraAPI');
 
-router.get('/activity', getDailyActivity);
-router.get('/personal_info', getPersonalInfo);
+router.get('/activity', ouraController.getDailyActivity);
+router.get('/personal_info', ouraController.getPersonalInfo);
 router.post('/habit', habitController.create);
 router.get('/habit', habitController.get);
+router.get('/currentHabit', ouraController.getHabitData);
 
 module.exports = router;

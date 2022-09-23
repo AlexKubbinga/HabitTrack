@@ -12,7 +12,7 @@ function createDateArray(start_date, length) {
   // create end date that is length away
   const start = new Date(start_date);
   let end = new Date(start_date);
-  end.setDate(end.getDate() + Number(length));
+  end.setDate(end.getDate() + Number(length - 1));
 
   // create array
   let dateArray = [];

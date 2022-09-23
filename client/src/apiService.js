@@ -32,7 +32,7 @@ export function getDailyActivity() {
 }
 
 export function getCurrentHabitChartData() {
-  const habitName = 'Same wake and bed time';
+  const habitName = 'Running';
   const params = new URLSearchParams({
     habit_name: habitName,
   });

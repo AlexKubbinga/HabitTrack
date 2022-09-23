@@ -20,7 +20,7 @@ function App() {
 
   useEffect(() => {
     // getScoreByMonth().then((res) => {
-    //   setDay(res);
+    //   setChartData(res);
     // });
     // getPersonalInfo().then((res) => {
     //   setDetails(res);
