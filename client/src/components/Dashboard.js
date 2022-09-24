@@ -2,7 +2,7 @@ import '../App.css';
 import ActivityChart from './ActivityChart';
 import { getPersonalInfo, getScoreByMonth } from '../apiService';
 
-function Dashboard({ details, data }) {
+function Dashboard({ details, data, mainHabit }) {
   return (
     <div>
       <div id="greeting">
@@ -12,7 +12,12 @@ function Dashboard({ details, data }) {
           {details.height}m tall.
         </p>
       </div>
-      <ActivityChart data={data}></ActivityChart>
+      {mainHabit.length > 0 && (
+        <div>
+          <h1>Current Habit: {mainHabit[0].description}</h1>
+          <ActivityChart data={data}></ActivityChart>
+        </div>
+      )}
     </div>
   );
 }

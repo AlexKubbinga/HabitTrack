@@ -8,5 +8,6 @@ router.post('/habit', habitController.create);
 router.get('/habit', habitController.get);
 router.get('/currentHabit', ouraController.getHabitData);
 router.get('/mainHabit', habitController.getMainHabit);
+router.put('/mainHabit', habitController.updateMainHabit);
 
 module.exports = router;

@@ -59,10 +59,37 @@ const getMainHabit = async (req, res) => {
     res
       .status(500)
       .send(
+        'There was an error in getting the main habit. Sorry thats all we know.'
+      );
+    console.log('ERROR: ', error);
+  }
+};
+
+const updateMainHabit = async (req, res) => {
+  try {
+    console.log('updating habit');
+    const { oldMain, newMain } = req.body;
+    console.log(oldMain, newMain);
+
+    const old = await Habit.findOneAndUpdate(
+      { name: oldMain },
+      { main_habit: false }
+    );
+    const newHabit = await Habit.findOneAndUpdate(
+      { name: newMain },
+      { main_habit: true }
+    );
+    console.log(old, newHabit);
+    res.status = 200;
+    res.send(newHabit);
+  } catch (error) {
+    res
+      .status(500)
+      .send(
         'There was an error in getting the habits. Sorry thats all we know.'
       );
     console.log('ERROR: ', error);
   }
 };
 
-module.exports = { create, get, getMainHabit };
+module.exports = { create, get, getMainHabit, updateMainHabit };

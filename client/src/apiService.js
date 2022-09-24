@@ -53,3 +53,14 @@ export async function getScoreByMonth() {
   console.log('final', final);
   return final;
 }
+
+export function updateMainHabit(oldMain, newMain) {
+  const requestOptions = {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ oldMain, newMain }),
+  };
+  return fetch(`${rootUrl}/mainHabit`, requestOptions)
+    .then((res) => console.log('updating habit', res))
+    .catch((err) => console.log('error', err));
+}

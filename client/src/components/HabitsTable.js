@@ -7,19 +7,29 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useState, useEffect } from 'react';
-import { getHabits } from '../apiService';
+import { getHabits, updateMainHabit } from '../apiService';
 import { calcHabitProgress } from '../utils/utils';
 import Button from '@mui/material/Button';
+import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import { styled } from '@mui/material/styles';
+import LinearProgress, {
+  linearProgressClasses,
+} from '@mui/material/LinearProgress';
+import StarIcon from '@mui/icons-material/Star';
 
-function HabitsTable({ setMainHabit }) {
-  const [habits, setHabits] = useState([]);
-
-  useEffect(() => {
-    getHabits().then((res) => {
-      setHabits(res);
-    });
-    console.log(habits);
-  }, []);
+function HabitsTable({ habits, setMainHabit, mainHabit }) {
+  const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
+    height: 10,
+    borderRadius: 5,
+    [`&.${linearProgressClasses.colorPrimary}`]: {
+      backgroundColor:
+        theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
+    },
+    [`& .${linearProgressClasses.bar}`]: {
+      borderRadius: 5,
+      backgroundColor: theme.palette.mode === 'light' ? '#1a90ff' : '#308fe8',
+    },
+  }));
 
   return (
     <div className="habitTable">
@@ -34,6 +44,7 @@ function HabitsTable({ setMainHabit }) {
                 <TableCell align="center">End Date</TableCell>
                 <TableCell align="center">Length</TableCell>
                 <TableCell align="center">Progress</TableCell>
+                <TableCell align="center">Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -52,17 +63,54 @@ function HabitsTable({ setMainHabit }) {
                   </TableCell>
                   <TableCell align="right">{row.length} days</TableCell>
                   <TableCell align="right">
-                    {calcHabitProgress(row.start_date, row.length)}%
+                    <BorderLinearProgress
+                      variant="determinate"
+                      value={calcHabitProgress(row.start_date, row.length)}
+                    />
                   </TableCell>
                   <TableCell align="right">
-                    <Button
-                      variant="contained"
-                      onClick={() => {
-                        setMainHabit([row]);
-                      }}
-                    >
-                      Set as main Habit
-                    </Button>
+                    {row.name === mainHabit[0].name ? (
+                      <>
+                        <StarIcon
+                          style={{
+                            position: 'relative',
+
+                            right: '60px',
+                            color: '#1c74d4',
+                          }}
+                        />
+                        <DeleteIcon
+                          style={{
+                            position: 'relative',
+                            left: '8px',
+                          }}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <Button
+                          variant="contained"
+                          onClick={() => {
+                            updateMainHabit(mainHabit[0].name, row.name);
+                            let newRow = row;
+                            newRow.main_habit = true;
+                            // change old main habit in Habits to false
+                            //change old main habit in
+                            setMainHabit([newRow]);
+                          }}
+                        >
+                          Set as main Habit
+                        </Button>
+                        <DeleteIcon
+                          fontSize="medium"
+                          style={{
+                            position: 'relative',
+                            left: '8px',
+                            top: '8px',
+                          }}
+                        />{' '}
+                      </>
+                    )}
                   </TableCell>
                 </TableRow>
               ))}
