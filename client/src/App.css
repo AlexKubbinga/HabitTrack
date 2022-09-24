@@ -46,14 +46,28 @@
   margin-top: 10px;
 }
 
-.habitTable {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
+
 
 nav {
   align-self: center;
   display: flex;
   flex-direction: column;
+}
+
+
+.habitsScreen {
+  background-color: #F5F5F5;
+  display:flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+}
+
+.habitTable {
+  display: flex;
+
+}
+
+.habitsScreen h1 {
 }

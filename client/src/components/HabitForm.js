@@ -41,17 +41,21 @@ function HabitForm() {
     // if (!res) {
     // }
     setState(initialState);
-
-    // props.setIsAuthenticated(true);
-    // auth.login(() => navigate('/profile'));
   };
 
   return (
-    <div className="createHabit">
-      <h1>Create a new habit</h1>
-      <div id="exampleHabit"></div>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="name">Habit Name</label>
+    <div className="bg-gray-100 w-full justify-end content-end">
+      <form
+        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        onSubmit={handleSubmit}
+      >
+        <h1 className="text-xl font-extrabold">Create a new habit</h1>
+        <label
+          className="block text-gray-700 text-md font-bold mb-2"
+          htmlFor="name"
+        >
+          Habit Name
+        </label>
         <input
           type="text"
           placeholder="Gratitude"
@@ -59,7 +63,12 @@ function HabitForm() {
           value={state.name}
           onChange={handleChange}
         />
-        <label htmlFor="description">Description</label>
+        <label
+          className="block text-gray-700 text-md font-bold mb-2"
+          htmlFor="description"
+        >
+          Description
+        </label>
         <input
           id="description"
           name="description"
@@ -68,7 +77,12 @@ function HabitForm() {
           value={state.description}
           onChange={handleChange}
         ></input>
-        <label htmlFor="start_date">Start Date</label>
+        <label
+          className="block text-gray-700 text-md font-bold mb-2"
+          htmlFor="start_date"
+        >
+          Start Date
+        </label>
         <input
           type="date"
           placeholder="MM/DD/YYYY"
@@ -76,7 +90,12 @@ function HabitForm() {
           value={state.start_date}
           onChange={handleChange}
         />
-        <label htmlFor="length">Length of Habit</label>
+        <label
+          className="block text-gray-700 text-md font-bold mb-2"
+          htmlFor="length"
+        >
+          Length of Habit
+        </label>
         <div>
           <input
             type="number"
@@ -90,7 +109,9 @@ function HabitForm() {
           ></input>
           <span>days</span>
         </div>
-        <p>Will the habit aim to improve your sleep or activity?</p>
+        <p className="block text-gray-700 text-md font-bold my-2">
+          Will the habit aim to improve your sleep or activity?
+        </p>
         <input
           type="radio"
           name="area_of_improvement"
@@ -109,7 +130,9 @@ function HabitForm() {
           onChange={handleChange}
         />
         <label htmlFor="Activity">Activity</label>
-        <p>Do you want to set this as your current habit?</p>
+        <p className="block text-gray-700 text-md font-bold my-2">
+          Do you want to set this as your current habit?
+        </p>
         <input
           type="radio"
           name="main_habit"

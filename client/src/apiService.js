@@ -18,6 +18,12 @@ export function getHabits() {
     .catch((err) => console.log('error', err));
 }
 
+export function getAverages() {
+  return fetch(`${rootUrl}/averages`)
+    .then((res) => res.json())
+    .catch((err) => console.log('error', err));
+}
+
 export function getPersonalInfo() {
   return fetch(`${rootUrl}/personal_info`)
     .then((response) => response.json())

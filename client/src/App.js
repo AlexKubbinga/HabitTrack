@@ -3,16 +3,17 @@ import './App.css';
 import { useState, useEffect } from 'react';
 import {
   getPersonalInfo,
-  getScoreByMonth,
   getCurrentHabitChartData,
   getMainHabit,
   getHabits,
+  getAverages,
 } from './apiService';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Dashboard from './components/Dashboard';
 import HabitForm from './components/HabitForm';
 import Navbar from './components/Navbar';
 import HabitsTable from './components/HabitsTable';
+import HabitsScreen from './components/HabitsScreen';
 // import { getScoreByMonth } from './utils/activity';
 
 function App() {
@@ -20,11 +21,9 @@ function App() {
   const [chartData, setChartData] = useState({});
   const [habits, setHabits] = useState([]);
   const [mainHabit, setMainHabit] = useState([]); // want to store users current habit
+  const [averages, setAverages] = useState([]);
 
   useEffect(() => {
-    // getScoreByMonth().then((res) => {
-    //   setChartData(res);
-    // });
     // getPersonalInfo().then((res) => {
     //   setDetails(res);
     // });
@@ -38,6 +37,10 @@ function App() {
         setChartData(res);
       });
     }
+
+    getAverages().then((res) => {
+      setAverages(res);
+    });
   }, []);
 
   useEffect(() => {
@@ -64,18 +67,19 @@ function App() {
                 mainHabit={mainHabit}
                 details={details}
                 data={chartData}
+                averages={averages}
               />
             }
           ></Route>
           <Route
             path="/habits"
             element={
-              <HabitsTable
+              <HabitsScreen
                 habits={habits}
                 mainHabit={mainHabit}
                 setMainHabit={setMainHabit}
                 setHabits
-              />
+              ></HabitsScreen>
             }
           ></Route>
           <Route path="/newHabit" element={<HabitForm />}></Route>

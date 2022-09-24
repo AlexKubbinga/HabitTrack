@@ -1,34 +1,39 @@
 import '../App.css';
 import ActivityChart from './ActivityChart';
 import { getPersonalInfo, getScoreByMonth } from '../apiService';
+import Typography from '@mui/material/Typography';
+import StatCard from './statCard';
+import Card from '@mui/material/Card';
 
-function Dashboard({ details, data, mainHabit }) {
+function Dashboard({ details, data, mainHabit, averages }) {
   return (
-    <div>
-      <div id="greeting">
-        <h1> Hello {details.email}</h1>
-        <p className="mx-4 font-bold text-blue-300">
-          You are {details.age} years old, weighing {details.weight}kg and
-          {details.height}m tall.
-        </p>
+    <div style={{ backgroundColor: '#F5F5F5', width: '100%' }}>
+      <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5">
+        {averages.map((average) => (
+          <StatCard average={average}></StatCard>
+        ))}
       </div>
+
       {mainHabit.length > 0 && (
-        <div>
-          <h1>Current Habit: {mainHabit[0].description}</h1>
-          <ActivityChart data={data}></ActivityChart>
+        <div className="flex justify-center">
+          <Card
+            className="font-light p-4 m-5"
+            variant="outlined"
+            sx={{ maxWidth: 1050 }}
+          >
+            <h1 className="text-4xl font-bold mb-4">
+              <span className="underline">Current Habit:</span>
+              <span className="text-4xl font-light">
+                &nbsp;{mainHabit[0].description}
+              </span>
+            </h1>
+
+            <ActivityChart data={data}></ActivityChart>
+          </Card>
         </div>
       )}
     </div>
   );
 }
-
-//   {day.map((month) => {
-//         return (
-//           <div key={month.month}>
-//             <h1>{month.value}</h1>
-//             <h2> {month.month}</h2>
-//           </div>
-//         );
-//       })}
 
 export default Dashboard;
