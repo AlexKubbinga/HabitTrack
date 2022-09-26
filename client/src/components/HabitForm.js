@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import '../App.css';
-import { createHabit } from '../apiService';
+import { createHabit, validateHabit } from '../apiService';
+import { useForm } from 'react-hook-form';
+import ErrorIcon from '@mui/icons-material/Error';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 
 function HabitForm() {
   const initialState = {
@@ -12,18 +16,14 @@ function HabitForm() {
     main_habit: '',
   };
 
-  const [state, setState] = useState(initialState);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const validateForm = () => {
-    return (
-      !state.name ||
-      !state.description ||
-      !state.start_date ||
-      !state.length ||
-      !state.area_of_improvement ||
-      !state.main_habit
-    );
-  };
+  const [state, setState] = useState(initialState);
+  const [isValidated, setIsValidated] = useState(true);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,128 +34,224 @@ function HabitForm() {
     console.log(state);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const res = await createHabit(state);
+  const onSubmit = async (data) => {
+    console.log('submitting');
+    console.log('data:', data);
+    console.log('now inside handleSubmit');
+    const canCreate = await validateHabit(data.name);
+    if (canCreate) {
+      console.log('we can make this habit');
+      setIsValidated(true);
+      await createHabit(state); // habit created
+      setState(initialState);
+    } else {
+      console.log("we can't create this habit");
+      setIsValidated(false);
+    }
+    console.log('done');
+    // const res = await createHabit(state);
     // if (!res) {
     // }
-    setState(initialState);
+    // setState(initialState);
   };
 
   return (
-    <div className="bg-gray-100 w-full justify-end content-end">
-      <form
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-        onSubmit={handleSubmit}
-      >
-        <h1 className="text-xl font-extrabold">Create a new habit</h1>
-        <label
-          className="block text-gray-700 text-md font-bold mb-2"
-          htmlFor="name"
+    <div className="bg-gray-100 w-full flex justify-center">
+      <div className="flex justify-center items-center">
+        <form
+          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+          onSubmit={handleSubmit(onSubmit)}
         >
-          Habit Name
-        </label>
-        <input
-          type="text"
-          placeholder="Gratitude"
-          name="name"
-          value={state.name}
-          onChange={handleChange}
-        />
-        <label
-          className="block text-gray-700 text-md font-bold mb-2"
-          htmlFor="description"
-        >
-          Description
-        </label>
-        <input
-          id="description"
-          name="description"
-          type="text"
-          placeholder="Write 3 things I am grateful for each day"
-          value={state.description}
-          onChange={handleChange}
-        ></input>
-        <label
-          className="block text-gray-700 text-md font-bold mb-2"
-          htmlFor="start_date"
-        >
-          Start Date
-        </label>
-        <input
-          type="date"
-          placeholder="MM/DD/YYYY"
-          name="start_date"
-          value={state.start_date}
-          onChange={handleChange}
-        />
-        <label
-          className="block text-gray-700 text-md font-bold mb-2"
-          htmlFor="length"
-        >
-          Length of Habit
-        </label>
-        <div>
+          <h1 className="text-xl font-extrabold text-blue-500">
+            Create a new habit
+          </h1>
+          <hr className="my-2"></hr>
+          {!isValidated && (
+            <Alert className="my-3" severity="error">
+              <AlertTitle>Habit Name Error</AlertTitle>
+              <p>A habit with this name already exists </p>
+              <strong>Pick a different habit name!</strong>
+            </Alert>
+          )}
+          <label
+            className="block text-gray-700 text-md font-bold mb-2"
+            htmlFor="name"
+          >
+            Habit Name
+          </label>
           <input
-            type="number"
-            min="0"
-            max="100"
-            name="length"
-            placeholder="30"
-            value={state.length}
+            className="shadow appearance-none border rounded py-2 px-3 mb-3 text-gray-700 leading-tight focus:border-indigo-500 focus:ring-indigo-500"
+            type="text"
+            placeholder="Gratitude"
+            {...register('name', { required: true })}
+            value={state.name}
             onChange={handleChange}
-            style={{ display: 'inline' }}
-          ></input>
-          <span>days</span>
-        </div>
-        <p className="block text-gray-700 text-md font-bold my-2">
-          Will the habit aim to improve your sleep or activity?
-        </p>
-        <input
-          type="radio"
-          name="area_of_improvement"
-          id="Sleep"
-          value="Sleep"
-          style={{ display: 'inline' }}
-          onChange={handleChange}
-        />
-        <label htmlFor="Sleep"> Sleep</label>&nbsp;
-        <input
-          type="radio"
-          name="area_of_improvement"
-          id="Activity"
-          value="Activity"
-          style={{ display: 'inline' }}
-          onChange={handleChange}
-        />
-        <label htmlFor="Activity">Activity</label>
-        <p className="block text-gray-700 text-md font-bold my-2">
-          Do you want to set this as your current habit?
-        </p>
-        <input
-          type="radio"
-          name="main_habit"
-          id="true"
-          value="true"
-          style={{ display: 'inline' }}
-          onChange={handleChange}
-        />
-        <label htmlFor="true">Yes</label>&nbsp;
-        <input
-          type="radio"
-          name="main_habit"
-          id="false"
-          value="false"
-          style={{ display: 'inline' }}
-          onChange={handleChange}
-        />
-        <label htmlFor="false">No</label>
-        <br></br>
-        <button type="submit" disabled={validateForm()}>
-          Submit
-        </button>
-      </form>
+          />
+          {errors.name && (
+            <>
+              <div>
+                <ErrorIcon className="text-red-700 block mx-1 pb-1" />
+                <p className="text-red-700 inline-block">
+                  Habit name is required
+                </p>
+              </div>
+            </>
+          )}
+          <label
+            className="block text-gray-700 text-md font-bold mb-2"
+            htmlFor="description"
+          >
+            Description
+          </label>
+          <textarea
+            className="shadow appearance-none border rounded py-2 px-3 mb-3 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            id="description"
+            {...register('description', { required: true })}
+            type="text"
+            placeholder="Write 3 things I am grateful for each day"
+            value={state.description}
+            onChange={handleChange}
+          ></textarea>
+          {errors.description && (
+            <div className="mb-1 mt-0 p-0">
+              <ErrorIcon className="text-red-700 block mx-1 pb-1" />
+              <p className="text-red-700 inline">Description is required</p>
+            </div>
+          )}
+          <label
+            className="block text-gray-700 text-md font-bold mb-2"
+            htmlFor="start_date"
+          >
+            Start Date
+          </label>
+          <input
+            className="shadow appearance-none border rounded py-2 px-3 mb-3 text-gray-700 leading-tight focus:border-indigo-500 focus:ring-indigo-500"
+            type="date"
+            placeholder="MM/DD/YYYY"
+            {...register('start_date', { required: true })}
+            value={state.start_date}
+            onChange={handleChange}
+          />
+          {errors.description && (
+            <div>
+              <ErrorIcon className="text-red-700 block mx-1 pb-1" />
+              <p className="text-red-700 inline">Start Date is required</p>{' '}
+            </div>
+          )}
+          <label
+            className="block text-gray-700 text-md font-bold mb-2"
+            htmlFor="length"
+          >
+            Length of Habit
+          </label>
+          <div>
+            <input
+              className="shadow appearance-none border rounded py-2 px-5 mb-3 text-gray-700 leading-tight focus:border-indigo-500 focus:ring-indigo-500"
+              type="number"
+              min="0"
+              max="100"
+              {...register('length', { required: true })}
+              placeholder="30"
+              value={state.length}
+              onChange={handleChange}
+              style={{ display: 'inline' }}
+            ></input>
+            <span className="ml-2">days</span>
+          </div>
+          {errors.length && (
+            <p className="text-red-700">Length of Habit is required</p>
+          )}
+          <p className="block text-gray-700 text-md font-bold my-2">
+            Will the habit aim to improve your sleep or activity?
+          </p>
+          <div className="flex items-center">
+            <input
+              className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+              type="radio"
+              {...register('area_of_improvement', { required: true })}
+              id="Sleep"
+              value="Sleep"
+              style={{ display: 'inline' }}
+              onChange={handleChange}
+            />
+            <label
+              htmlFor="Sleep"
+              className="ml-3 block text-md font-medium text-gray-700"
+            >
+              Sleep
+            </label>
+          </div>
+          <div className="flex items-center">
+            <input
+              className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+              type="radio"
+              {...register('area_of_improvement')}
+              id="Activity"
+              value="Activity"
+              style={{ display: 'inline' }}
+              onChange={handleChange}
+            />
+            <label
+              htmlFor="Activity"
+              className="ml-3 block text-md font-medium text-gray-700"
+            >
+              Activity
+            </label>
+          </div>
+          {errors.area_of_improvement && (
+            <div className="pt-2">
+              <ErrorIcon className="text-red-700 block mx-1 pb-1" />
+              <p className="text-red-700 inline">
+                A Habit needs to target either Sleep or Activity
+              </p>
+            </div>
+          )}
+          <p className="block text-gray-700 text-md font-bold my-2">
+            Do you want to set this as your current habit?
+          </p>
+          <div className="flex items-center">
+            <input
+              className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+              type="radio"
+              {...register('main_habit')}
+              id="true"
+              value="true"
+              style={{ display: 'inline' }}
+              onChange={handleChange}
+            />
+            <label
+              htmlFor="true"
+              className="ml-3 block text-md font-medium text-gray-700"
+            >
+              Yes
+            </label>
+          </div>
+          <div className="flex items-center">
+            <input
+              className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+              type="radio"
+              {...register('main_habit')}
+              id="false"
+              value="false"
+              style={{ display: 'inline' }}
+              onChange={handleChange}
+            />
+            <label
+              htmlFor="false"
+              className="ml-3 block text-md font-medium text-gray-700"
+            >
+              No
+            </label>
+          </div>
+          <br></br>
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="submit"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

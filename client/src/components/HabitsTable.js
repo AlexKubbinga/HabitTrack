@@ -108,7 +108,7 @@ function HabitsTable({ habits, setMainHabit, mainHabit }) {
                             left: '8px',
                             top: '8px',
                           }}
-                        />{' '}
+                        />
                       </>
                     )}
                   </TableCell>

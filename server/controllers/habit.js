@@ -46,12 +46,33 @@ const get = async (req, res) => {
   }
 };
 
+const validateHabit = async (req, res) => {
+  try {
+    console.log('validating habit');
+    const { habit_name } = req.query;
+    const exists = await Habit.findOne({ name: habit_name });
+    console.log(exists);
+    if (exists) {
+      res.status(200).send(false); // can't create
+      return;
+    }
+    res.status(200).send(true); // habit can be created
+  } catch (error) {
+    res
+      .status(400)
+      .send(
+        'There was an error in validating the habit. Sorry thats all we know.'
+      );
+    console.log('ERROR: ', error);
+  }
+};
+
 const getMainHabit = async (req, res) => {
   try {
     const habits = await Habit.find();
 
-    const result = habits.filter((habitObj) => {
-      return habitObj.main_habit;
+    const result = habits.filter((habit) => {
+      return habit.main_habit;
     });
     res.status = 200;
     res.send(result);
@@ -92,4 +113,4 @@ const updateMainHabit = async (req, res) => {
   }
 };
 
-module.exports = { create, get, getMainHabit, updateMainHabit };
+module.exports = { create, get, getMainHabit, updateMainHabit, validateHabit };

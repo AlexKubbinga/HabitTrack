@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, createContext } from 'react';
 import {
   getPersonalInfo,
   getCurrentHabitChartData,
@@ -23,10 +23,9 @@ function App() {
   const [mainHabit, setMainHabit] = useState([]); // want to store users current habit
   const [averages, setAverages] = useState([]);
 
+  const AppContext = createContext();
+
   useEffect(() => {
-    // getPersonalInfo().then((res) => {
-    //   setDetails(res);
-    // });
     getMainHabit().then((res) => {
       setMainHabit(res);
     });
@@ -57,34 +56,38 @@ function App() {
 
   return (
     <>
-      <div className="App">
-        <Navbar />
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <Dashboard
-                mainHabit={mainHabit}
-                details={details}
-                data={chartData}
-                averages={averages}
-              />
-            }
-          ></Route>
-          <Route
-            path="/habits"
-            element={
-              <HabitsScreen
-                habits={habits}
-                mainHabit={mainHabit}
-                setMainHabit={setMainHabit}
-                setHabits
-              ></HabitsScreen>
-            }
-          ></Route>
-          <Route path="/newHabit" element={<HabitForm />}></Route>
-        </Routes>
-      </div>
+      <AppContext.Provider
+        value={{ habits, setHabits, mainHabit, setMainHabit }}
+      >
+        <div className="App">
+          <Navbar />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Dashboard
+                  mainHabit={mainHabit}
+                  details={details}
+                  data={chartData}
+                  averages={averages}
+                />
+              }
+            ></Route>
+            <Route
+              path="/habits"
+              element={
+                <HabitsScreen
+                  habits={habits}
+                  mainHabit={mainHabit}
+                  setMainHabit={setMainHabit}
+                  setHabits
+                ></HabitsScreen>
+              }
+            ></Route>
+            <Route path="/newHabit" element={<HabitForm />}></Route>
+          </Routes>
+        </div>
+      </AppContext.Provider>
     </>
   );
 }

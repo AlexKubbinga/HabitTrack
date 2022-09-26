@@ -43,12 +43,22 @@ export function getMainHabit() {
     .catch((error) => console.log('error', error));
 }
 
-export function getCurrentHabitChartData(habitName = 'Run') {
+export function getCurrentHabitChartData(habitName) {
   const params = new URLSearchParams({
     habit_name: habitName,
   });
   const query = params.toString();
   return fetch(`${rootUrl}/currentHabit?${query}`)
+    .then((res) => res.json())
+    .catch((err) => console.log('error', err));
+}
+
+export function validateHabit(habitName) {
+  const params = new URLSearchParams({
+    habit_name: habitName,
+  });
+  const query = params.toString();
+  return fetch(`${rootUrl}/validateHabit?${query}`)
     .then((res) => res.json())
     .catch((err) => console.log('error', err));
 }
