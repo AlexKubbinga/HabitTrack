@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import '../App.css';
-import { createHabit, validateHabit } from '../apiService';
+import { createHabit, validateHabit, updateMainHabit } from '../apiService';
 import { useForm } from 'react-hook-form';
 import ErrorIcon from '@mui/icons-material/Error';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
+import { AppContext } from '../App';
+import HabitScreen from './HabitsScreen';
 
 function HabitForm() {
   const initialState = {
@@ -15,6 +17,8 @@ function HabitForm() {
     area_of_improvement: '',
     main_habit: '',
   };
+
+  const { habits, setHabits, mainHabit, setMainHabit } = useContext(AppContext);
 
   const {
     register,
@@ -35,24 +39,32 @@ function HabitForm() {
   };
 
   const onSubmit = async (data) => {
+    let firstFlag = false;
     console.log('submitting');
-    console.log('data:', data);
-    console.log('now inside handleSubmit');
+    data.length = Number(data.length);
     const canCreate = await validateHabit(data.name);
     if (canCreate) {
-      console.log('we can make this habit');
       setIsValidated(true);
-      await createHabit(state); // habit created
-      setState(initialState);
+
+      // case when no habits exist
+      if (!data.main_habit) {
+        firstFlag = true;
+        data.main_habit = 'true';
+        setMainHabit([data]);
+      }
+
+      const created = await createHabit(data); // habit created
+
+      // case when habits exist and want to set as current
+      if (data.main_habit === 'true' && !firstFlag) {
+        updateMainHabit(mainHabit[0].name, data.name);
+        setMainHabit([data]);
+      }
     } else {
-      console.log("we can't create this habit");
       setIsValidated(false);
     }
-    console.log('done');
-    // const res = await createHabit(state);
-    // if (!res) {
-    // }
-    // setState(initialState);
+    setState(initialState);
+    // if created (change screen or success message)
   };
 
   return (
@@ -206,43 +218,48 @@ function HabitForm() {
               </p>
             </div>
           )}
-          <p className="block text-gray-700 text-md font-bold my-2">
-            Do you want to set this as your current habit?
-          </p>
-          <div className="flex items-center">
-            <input
-              className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
-              type="radio"
-              {...register('main_habit')}
-              id="true"
-              value="true"
-              style={{ display: 'inline' }}
-              onChange={handleChange}
-            />
-            <label
-              htmlFor="true"
-              className="ml-3 block text-md font-medium text-gray-700"
-            >
-              Yes
-            </label>
-          </div>
-          <div className="flex items-center">
-            <input
-              className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
-              type="radio"
-              {...register('main_habit')}
-              id="false"
-              value="false"
-              style={{ display: 'inline' }}
-              onChange={handleChange}
-            />
-            <label
-              htmlFor="false"
-              className="ml-3 block text-md font-medium text-gray-700"
-            >
-              No
-            </label>
-          </div>
+          {/* this will only show if its not the first habit */}
+          {habits.length > 0 && (
+            <>
+              <p className="block text-gray-700 text-md font-bold my-2">
+                Do you want to set this as your current habit?
+              </p>
+              <div className="flex items-center">
+                <input
+                  className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                  type="radio"
+                  {...register('main_habit')}
+                  id="true"
+                  value="true"
+                  style={{ display: 'inline' }}
+                  onChange={handleChange}
+                />
+                <label
+                  htmlFor="true"
+                  className="ml-3 block text-md font-medium text-gray-700"
+                >
+                  Yes
+                </label>
+              </div>
+              <div className="flex items-center">
+                <input
+                  className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                  type="radio"
+                  {...register('main_habit')}
+                  id="false"
+                  value="false"
+                  style={{ display: 'inline' }}
+                  onChange={handleChange}
+                />
+                <label
+                  htmlFor="false"
+                  className="ml-3 block text-md font-medium text-gray-700"
+                >
+                  No
+                </label>
+              </div>{' '}
+            </>
+          )}
           <br></br>
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"

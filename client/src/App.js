@@ -16,14 +16,14 @@ import HabitsTable from './components/HabitsTable';
 import HabitsScreen from './components/HabitsScreen';
 // import { getScoreByMonth } from './utils/activity';
 
+export const AppContext = createContext();
+
 function App() {
   const [details, setDetails] = useState([]);
   const [chartData, setChartData] = useState({});
   const [habits, setHabits] = useState([]);
   const [mainHabit, setMainHabit] = useState([]); // want to store users current habit
   const [averages, setAverages] = useState([]);
-
-  const AppContext = createContext();
 
   useEffect(() => {
     getMainHabit().then((res) => {
@@ -43,7 +43,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (mainHabit.length > 0) {
+    if (mainHabit?.length > 0) {
       getCurrentHabitChartData(mainHabit[0].name).then((res) => {
         console.log(res);
         setChartData(res);

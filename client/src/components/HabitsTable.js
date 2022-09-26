@@ -69,7 +69,7 @@ function HabitsTable({ habits, setMainHabit, mainHabit }) {
                     />
                   </TableCell>
                   <TableCell align="right">
-                    {row.name === mainHabit[0].name ? (
+                    {row.name === mainHabit[0]?.name ? (
                       <>
                         <StarIcon
                           style={{
@@ -91,7 +91,7 @@ function HabitsTable({ habits, setMainHabit, mainHabit }) {
                         <Button
                           variant="contained"
                           onClick={() => {
-                            updateMainHabit(mainHabit[0].name, row.name);
+                            updateMainHabit(mainHabit[0]?.name, row.name);
                             let newRow = row;
                             newRow.main_habit = true;
                             // change old main habit in Habits to false
