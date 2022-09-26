@@ -80,3 +80,16 @@ export function updateMainHabit(oldMain, newMain) {
     .then((res) => console.log('updating habit', res))
     .catch((err) => console.log('error', err));
 }
+
+export function deleteHabit(habitName) {
+  const requestOptions = {
+    method: 'DELETE',
+  };
+  const params = new URLSearchParams({
+    habit_name: habitName,
+  });
+  const query = params.toString();
+  return fetch(`${rootUrl}/deleteHabit?${query}`, requestOptions)
+    .then((res) => res.json())
+    .catch((err) => console.log('error', err));
+}

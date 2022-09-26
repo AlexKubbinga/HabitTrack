@@ -83,3 +83,16 @@ export function getAvgByWeek(data, metric) {
   }
   return weekFinal;
 }
+
+export function sortHabits(habits) {
+  // sorts by main habit and then by start date with latest start date first
+  return habits.sort((a, b) => {
+    return a.main_habit > b.main_habit
+      ? -1
+      : a.main_habit === b.main_habit
+      ? new Date(a.start_date) > new Date(b.start_date)
+        ? -1
+        : 1
+      : 1;
+  });
+}

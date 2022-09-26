@@ -8,7 +8,7 @@ import HabitForm from './HabitForm';
 
 function Navbar() {
   return (
-    <div className="nav-bar">
+    <div className="">
       <nav>
         <Button id="home" component={Link} to="/">
           Home

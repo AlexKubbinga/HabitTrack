@@ -31,4 +31,6 @@ function createDateArray(start_date, length) {
   return dateArray; // ["2022-08-28" ... "2022-09-28"]
 }
 
+today = new Date(new Date().toISOString().slice(0, 10));
+
 module.exports = { createDateArray, getEndDate };

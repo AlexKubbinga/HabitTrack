@@ -113,4 +113,27 @@ const updateMainHabit = async (req, res) => {
   }
 };
 
-module.exports = { create, get, getMainHabit, updateMainHabit, validateHabit };
+const deleteHabit = async (req, res) => {
+  try {
+    const { habit_name } = req.query;
+    const result = await Habit.deleteOne({ name: habit_name });
+    res.status = 200;
+    res.send(result);
+  } catch (error) {
+    res
+      .status(500)
+      .send(
+        'There was an error in deleting the habit. Sorry thats all we know.'
+      );
+    console.log('ERROR: ', error);
+  }
+};
+
+module.exports = {
+  create,
+  get,
+  getMainHabit,
+  updateMainHabit,
+  validateHabit,
+  deleteHabit,
+};

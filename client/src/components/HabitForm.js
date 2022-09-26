@@ -1,6 +1,11 @@
 import { useState, useContext } from 'react';
 import '../App.css';
-import { createHabit, validateHabit, updateMainHabit } from '../apiService';
+import {
+  createHabit,
+  validateHabit,
+  updateMainHabit,
+  getHabits,
+} from '../apiService';
 import { useForm } from 'react-hook-form';
 import ErrorIcon from '@mui/icons-material/Error';
 import Alert from '@mui/material/Alert';
@@ -60,6 +65,8 @@ function HabitForm() {
         updateMainHabit(mainHabit[0].name, data.name);
         setMainHabit([data]);
       }
+      const newHabits = await getHabits();
+      setHabits(newHabits);
     } else {
       setIsValidated(false);
     }
@@ -68,8 +75,8 @@ function HabitForm() {
   };
 
   return (
-    <div className="bg-gray-100 w-full flex justify-center">
-      <div className="flex justify-center items-center">
+    <div className="bg-gray-100 flex justify-center">
+      <div className="">
         <form
           className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
           onSubmit={handleSubmit(onSubmit)}
@@ -273,83 +280,3 @@ function HabitForm() {
   );
 }
 export default HabitForm;
-
-/*
-import { useNavigate } from 'react-router-dom';
-
-const initialState = {
-  email: '',
-  password: '',
-  firstName: '',
-  lastName: '',
-};
-
-const Register = (props) => {
-  const navigate = useNavigate();
-  const [state, setState] = useState(initialState);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setState((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    // Add logic to send send a request to the API service /register
-    const email = e.target.email.value;
-    const password = e.target.password.value;
-    const firstName = e.target.firstName.value;
-    const lastName = e.target.lastName.value;
-    const details = { email, password, firstName, lastName };
-    const res = await apiService.register(details);
-    console.log(res);
-    // This sets isAuthenticated = true and redirects to profile
-    props.setIsAuthenticated(true);
-    auth.login(() => navigate('/profile'));
-  };
-
-
-
-  return (
-    <section>
-      <h2>Register</h2>
-      <form className="form" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="name@mail.com"
-          name="email"
-          value={state.email}
-          onChange={handleChange}
-        />
-        <input
-          type="password"
-          placeholder="supersecretthingy"
-          name="password"
-          value={state.password}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          placeholder="Name"
-          name="firstName"
-          value={state.firstName}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          placeholder="Nameson"
-          name="lastName"
-          value={state.lastName}
-          onChange={handleChange}
-        />
-        <button className="form-submit" type="submit" disabled={validateForm()}>
-          &nbsp;Register&nbsp;
-        </button>
-      </form>
-    </section>
-  );
-};
-*/

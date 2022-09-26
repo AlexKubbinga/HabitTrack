@@ -6,8 +6,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { useState, useEffect } from 'react';
-import { getHabits, updateMainHabit } from '../apiService';
+import { useState, useEffect, useContext } from 'react';
+import { getHabits, updateMainHabit, deleteHabit } from '../apiService';
 import { calcHabitProgress } from '../utils/utils';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
@@ -16,18 +16,19 @@ import LinearProgress, {
   linearProgressClasses,
 } from '@mui/material/LinearProgress';
 import StarIcon from '@mui/icons-material/Star';
+import { AppContext } from '../App';
 
 function HabitsTable({ habits, setMainHabit, mainHabit }) {
+  const { setHabits } = useContext(AppContext);
   const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     height: 10,
     borderRadius: 5,
     [`&.${linearProgressClasses.colorPrimary}`]: {
-      backgroundColor:
-        theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
+      backgroundColor: theme.palette.grey[200],
     },
-    [`& .${linearProgressClasses.bar}`]: {
+    [`&.${linearProgressClasses.bar}`]: {
       borderRadius: 5,
-      backgroundColor: theme.palette.mode === 'light' ? '#1a90ff' : '#308fe8',
+      backgroundColor: '#1a90ff',
     },
   }));
 
@@ -74,15 +75,8 @@ function HabitsTable({ habits, setMainHabit, mainHabit }) {
                         <StarIcon
                           style={{
                             position: 'relative',
-
                             right: '60px',
                             color: '#1c74d4',
-                          }}
-                        />
-                        <DeleteIcon
-                          style={{
-                            position: 'relative',
-                            left: '8px',
                           }}
                         />
                       </>
@@ -90,6 +84,7 @@ function HabitsTable({ habits, setMainHabit, mainHabit }) {
                       <>
                         <Button
                           variant="contained"
+                          style={{ textTransform: 'none' }}
                           onClick={() => {
                             updateMainHabit(mainHabit[0]?.name, row.name);
                             let newRow = row;
@@ -99,18 +94,24 @@ function HabitsTable({ habits, setMainHabit, mainHabit }) {
                             setMainHabit([newRow]);
                           }}
                         >
-                          Set as main Habit
+                          Set as Main Habit
                         </Button>
-                        <DeleteIcon
-                          fontSize="medium"
-                          style={{
-                            position: 'relative',
-                            left: '8px',
-                            top: '8px',
-                          }}
-                        />
                       </>
                     )}
+                    <DeleteIcon
+                      fontSize="medium"
+                      style={{
+                        position: 'relative',
+                        left: '8px',
+                      }}
+                      onClick={async () => {
+                        console.log('DELETED');
+                        await deleteHabit(row.name);
+                        getHabits().then((res) => {
+                          setHabits(res);
+                        });
+                      }}
+                    />
                   </TableCell>
                 </TableRow>
               ))}

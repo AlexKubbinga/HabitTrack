@@ -51,21 +51,24 @@ function App() {
     }
     getHabits().then((res) => {
       setHabits(res);
+      console.log(habits);
     });
   }, [mainHabit]);
 
   return (
     <>
-      <AppContext.Provider
-        value={{ habits, setHabits, mainHabit, setMainHabit }}
-      >
-        <div className="App">
+      <div className="App">
+        <AppContext.Provider
+          value={{ habits, setHabits, mainHabit, setMainHabit }}
+        >
           <Navbar />
+
           <Routes>
             <Route
               path="/"
               element={
                 <Dashboard
+                  className="h-full"
                   mainHabit={mainHabit}
                   details={details}
                   data={chartData}
@@ -86,8 +89,8 @@ function App() {
             ></Route>
             <Route path="/newHabit" element={<HabitForm />}></Route>
           </Routes>
-        </div>
-      </AppContext.Provider>
+        </AppContext.Provider>
+      </div>
     </>
   );
 }

@@ -1,4 +1,12 @@
 
+html, body,#root, .App {
+  height: 100vh;
+  /* background-color: rgb(243 244 246); */
+}
+
+/*
+
+
 
 .App {
   display: flex;
@@ -64,14 +72,10 @@ nav {
   width: 100%;
 }
 
-.error {
-  color: red;
-}
-
 .habitTable {
   display: flex;
 
 }
 
 .habitsScreen h1 {
-}
+} */

@@ -114,15 +114,16 @@ const getHabitData = async (req, res) => {
     return response.json();
   });
 
-  const scoreAvg = getAverage(baseline);
+  const scoreAvg = getAverage(baseline).toFixed(0);
 
   const baseline_array = new Array(habit.length).fill(scoreAvg);
   // console.log(baseline_array);
 
   // will fetch too much data if end_date is before today
+
   //TODO
   habitData = await fetch(
-    `${rootUrl}${daily_metric}?start_date=${habit.start_date}`,
+    `${rootUrl}${daily_metric}?start_date=${habit.start_date}&end_date=${habit.end_date}`,
     requestOptions
   )
     .then((response) => {
@@ -132,17 +133,26 @@ const getHabitData = async (req, res) => {
     .catch((error) => console.log('error', error));
 
   // console.log('response code from API', code);
-  // console.log(habitData);
+  console.log('HABITDATA: ', habitData);
 
-  habitData = habitData.data.map((day) => day.score);
-  // console.log(habitData);
+  habitData = habitData.data.map((day) => {
+    return { score: day.score, date: day.day };
+  });
+
+  console.log(habitData);
 
   const dataArray = [];
+  let habitCounter = 0;
+  // adds habitData to the correct day (not just at the beginning if ring wasn't worn for a few days)
   for (let i = 0; i < habit.length; i++) {
     const temp = {};
-    temp['y-axis'] = habit.dates[i];
+    temp['y-axis'] = i + 1; //habit.dates[i]
     temp['baseline'] = baseline_array[i];
-    temp['habit'] = habitData[i];
+    temp['habit'] = undefined;
+    if (habit.dates[i] === habitData[habitCounter]?.date) {
+      temp['habit'] = habitData[habitCounter]?.score;
+      if (habitCounter < habitData.length - 1) habitCounter += 1;
+    }
     dataArray.push(temp);
   }
   console.log(dataArray);

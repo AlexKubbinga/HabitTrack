@@ -11,5 +11,6 @@ router.get('/mainHabit', habitController.getMainHabit);
 router.put('/mainHabit', habitController.updateMainHabit);
 router.get('/averages', ouraController.getAverages);
 router.get('/validateHabit', habitController.validateHabit);
+router.delete('/deleteHabit', habitController.deleteHabit);
 
 module.exports = router;
