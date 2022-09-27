@@ -31,16 +31,16 @@ function HabitForm() {
     formState: { errors },
   } = useForm();
 
-  const [state, setState] = useState(initialState);
+  const [inputState, setInputState] = useState(initialState);
   const [isValidated, setIsValidated] = useState(true);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setState((prevState) => ({
+    setInputState((prevState) => ({
       ...prevState,
       [name]: value,
     }));
-    console.log(state);
+    console.log(inputState);
   };
 
   const onSubmit = async (data) => {
@@ -70,18 +70,18 @@ function HabitForm() {
     } else {
       setIsValidated(false);
     }
-    setState(initialState);
+    setInputState(initialState);
     // if created (change screen or success message)
   };
 
   return (
-    <div className="bg-gray-100 flex justify-center">
+    <div className="bg-gray-100 flex justify-center mt-8">
       <div className="">
         <form
           className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <h1 className="text-xl font-extrabold text-blue-500">
+          <h1 className="text-3xl font-extrabold text-blue-500">
             Create a new habit
           </h1>
           <hr className="my-2"></hr>
@@ -103,7 +103,7 @@ function HabitForm() {
             type="text"
             placeholder="Gratitude"
             {...register('name', { required: true })}
-            value={state.name}
+            value={inputState.name}
             onChange={handleChange}
           />
           {errors.name && (
@@ -128,7 +128,7 @@ function HabitForm() {
             {...register('description', { required: true })}
             type="text"
             placeholder="Write 3 things I am grateful for each day"
-            value={state.description}
+            value={inputState.description}
             onChange={handleChange}
           ></textarea>
           {errors.description && (
@@ -148,7 +148,7 @@ function HabitForm() {
             type="date"
             placeholder="MM/DD/YYYY"
             {...register('start_date', { required: true })}
-            value={state.start_date}
+            value={inputState.start_date}
             onChange={handleChange}
           />
           {errors.description && (
@@ -171,7 +171,7 @@ function HabitForm() {
               max="100"
               {...register('length', { required: true })}
               placeholder="30"
-              value={state.length}
+              value={inputState.length}
               onChange={handleChange}
               style={{ display: 'inline' }}
             ></input>

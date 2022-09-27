@@ -30,13 +30,6 @@ function App() {
       setMainHabit(res);
     });
 
-    if (mainHabit.length > 0) {
-      getCurrentHabitChartData(mainHabit[0].name).then((res) => {
-        console.log(res);
-        setChartData(res);
-      });
-    }
-
     getAverages().then((res) => {
       setAverages(res);
     });
@@ -45,13 +38,11 @@ function App() {
   useEffect(() => {
     if (mainHabit?.length > 0) {
       getCurrentHabitChartData(mainHabit[0].name).then((res) => {
-        console.log(res);
         setChartData(res);
       });
     }
     getHabits().then((res) => {
       setHabits(res);
-      console.log(habits);
     });
   }, [mainHabit]);
 
@@ -68,7 +59,6 @@ function App() {
               path="/"
               element={
                 <Dashboard
-                  className="h-full"
                   mainHabit={mainHabit}
                   details={details}
                   data={chartData}

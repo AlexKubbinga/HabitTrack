@@ -33,10 +33,10 @@ function HabitsTable({ habits, setMainHabit, mainHabit }) {
   }));
 
   return (
-    <div className="habitTable">
+    <div className="habitTable mt-8">
       <div id="table">
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table sx={{ minWidth: 200 }} aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell>Habit</TableCell>
@@ -69,12 +69,13 @@ function HabitsTable({ habits, setMainHabit, mainHabit }) {
                       value={calcHabitProgress(row.start_date, row.length)}
                     />
                   </TableCell>
-                  <TableCell align="right">
+                  <TableCell align="center">
                     {row.name === mainHabit[0]?.name ? (
                       <>
                         <StarIcon
+                          sx={{ textAlign: 'center' }}
                           style={{
-                            position: 'relative',
+                            position: 'static',
                             right: '60px',
                             color: '#1c74d4',
                           }}

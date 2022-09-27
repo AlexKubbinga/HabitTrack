@@ -7,10 +7,13 @@ function getWeek(timestamp) {
 export function calcHabitProgress(start_date, length) {
   const start = DateTime.fromISO(start_date);
   const today = DateTime.now();
-  return (
-    (Math.ceil(today.diff(start, 'days').toObject().days) / length) *
-    100
-  ).toFixed(0);
+  const result = Number(
+    (
+      (Math.ceil(today.diff(start, 'days').toObject().days) / length) *
+      100
+    ).toFixed(0)
+  );
+  return result;
 }
 
 export function getAvgByMonth(data, metric) {

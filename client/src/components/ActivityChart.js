@@ -9,6 +9,7 @@ import {
   Tooltip,
   Legend,
   Label,
+  ResponsiveContainer,
 } from 'recharts';
 
 function ActivityChart({ data }) {
@@ -20,11 +21,11 @@ function ActivityChart({ data }) {
             Day: &nbsp;{label}
           </p>
           <hr></hr>
-          <p className=" text-purple-500 text-md font-bold pr-4 pl-2">
+          <p className=" text-purple-400 text-md font-bold pr-4 pl-2">
             Baseline: {payload[0]?.value}
           </p>
           {payload[1]?.value && (
-            <p className=" text-green-500 text-md font-bold pr-4 pl-2">
+            <p className=" text-green-400 text-md font-bold pr-4 pl-2">
               Habit: {payload[1]?.value || ''}
             </p>
           )}
@@ -35,32 +36,36 @@ function ActivityChart({ data }) {
     return null;
   }
 
+  const title = <p className="font-bold text-xl">Day</p>;
+
   return (
-    <LineChart
-      width={1000}
-      height={500}
-      data={data}
-      margin={{ top: 5, right: 20, bottom: 50, left: 30 }}
-    >
-      <Line type="monotone" dataKey="baseline" stroke="#8884d8" dot={false} />
-      <Line type="monotone" dataKey="habit" stroke="#82ca9d" />
-      <XAxis
-        dataKey="y-axis"
-        label={{
-          value: 'Days',
-          position: 'bottom',
-        }}
-      ></XAxis>
-      <YAxis
-        label={{
-          value: 'Score',
-          position: 'insideLeft',
-          offset: -20,
-        }}
-      />
-      <Tooltip content={<CustomTooltip />} />
-      <Legend verticalAlign="top" height={50} />
-    </LineChart>
+    <ResponsiveContainer height={500}>
+      <LineChart
+        width={900} //get screen width  //listen to window resize event
+        height={500}
+        data={data}
+        margin={{ top: 5, right: 20, bottom: 50, left: 30 }}
+      >
+        <Line type="monotone" dataKey="baseline" stroke="#808080" dot={false} />
+        <Line type="monotone" dataKey="habit" stroke="#3482F6" />
+        <XAxis
+          dataKey="y-axis"
+          label={{
+            value: 'Day',
+            position: 'bottom',
+          }}
+        ></XAxis>
+        <YAxis
+          label={{
+            value: 'Score',
+            position: 'insideLeft',
+            offset: -20,
+          }}
+        />
+        <Tooltip content={<CustomTooltip />} />
+        <Legend verticalAlign="top" height={50} />
+      </LineChart>
+    </ResponsiveContainer>
   );
 }
 
