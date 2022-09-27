@@ -17,15 +17,15 @@ function ActivityChart({ data }) {
     if (active) {
       return (
         <div className="border rounded">
-          <p className=" text-gray-500 text-md font-bold pl-2">
+          <p className=" text-black-500 text-md font-bold pl-2">
             Day: &nbsp;{label}
           </p>
           <hr></hr>
-          <p className=" text-purple-400 text-md font-bold pr-4 pl-2">
+          <p className=" text-gray-500 text-md font-bold pr-4 pl-2">
             Baseline: {payload[0]?.value}
           </p>
           {payload[1]?.value && (
-            <p className=" text-green-400 text-md font-bold pr-4 pl-2">
+            <p className=" text-blue-500 text-md font-bold pr-4 pl-2">
               Habit: {payload[1]?.value || ''}
             </p>
           )}

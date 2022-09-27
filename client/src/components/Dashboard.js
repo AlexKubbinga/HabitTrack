@@ -6,6 +6,7 @@ import StatCard from './statCard';
 import Card from '@mui/material/Card';
 import { ResponsiveContainer } from 'recharts';
 import { height } from '@mui/system';
+import { DateTime } from 'luxon';
 
 function Dashboard({ details, data, mainHabit, averages }) {
   return (
@@ -17,7 +18,18 @@ function Dashboard({ details, data, mainHabit, averages }) {
           ))}
         </div>
       </div>
-
+      {new Date(mainHabit[0]?.start_date) > new Date() && (
+        <>
+          <div className="flex justify-center">
+            <h1 className="bg-red-100 rounded-lg w-fit px-3">
+              This habit will start on{' '}
+              {DateTime.fromISO(mainHabit[0]?.start_date).toLocaleString(
+                DateTime.DATE_FULL
+              )}
+            </h1>
+          </div>
+        </>
+      )}
       {mainHabit.length > 0 && (
         <div className="flex justify-center w-full">
           <Card

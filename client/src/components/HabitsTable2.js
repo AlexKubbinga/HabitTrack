@@ -17,6 +17,7 @@ import LinearProgress, {
 } from '@mui/material/LinearProgress';
 import StarIcon from '@mui/icons-material/Star';
 import { AppContext } from '../App';
+import { rootShouldForwardProp } from '@mui/material/styles/styled';
 
 function HabitsTable2({ habits, setMainHabit, mainHabit }) {
   const { setHabits } = useContext(AppContext);
@@ -107,6 +108,9 @@ function HabitsTable2({ habits, setMainHabit, mainHabit }) {
                     onClick={async () => {
                       console.log('DELETED');
                       await deleteHabit(row.name);
+                      if (row.name === mainHabit[0].name) {
+                        setMainHabit([]);
+                      }
                       getHabits().then((res) => {
                         setHabits(res);
                       });
