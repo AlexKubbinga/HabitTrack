@@ -12,8 +12,10 @@ import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import { AppContext } from '../App';
 import HabitScreen from './HabitsScreen';
+import { useNavigate } from 'react-router-dom';
 
 function HabitForm() {
+  const navigate = useNavigate();
   const initialState = {
     name: '',
     description: '',
@@ -71,6 +73,8 @@ function HabitForm() {
       setIsValidated(false);
     }
     setInputState(initialState);
+    navigate('/habits');
+
     // if created (change screen or success message)
   };
 

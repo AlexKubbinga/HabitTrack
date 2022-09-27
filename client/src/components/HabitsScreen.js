@@ -1,5 +1,4 @@
 import HabitsTable from './HabitsTable';
-import HabitsTable2 from './HabitsTable2';
 import { sortHabits } from '../utils/utils';
 import { Alert, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -7,11 +6,11 @@ import { Link } from 'react-router-dom';
 function HabitScreen({ habits, mainHabit, setMainHabit, setHabits }) {
   if (habits.length)
     return (
-      <HabitsTable2
+      <HabitsTable
         habits={sortHabits(habits)}
         mainHabit={mainHabit}
         setMainHabit={setMainHabit}
-      ></HabitsTable2>
+      ></HabitsTable>
     );
   return (
     <div className="h-3/6 flex justify-center ">
