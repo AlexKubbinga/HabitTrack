@@ -4,6 +4,22 @@ html, body,#root, .App {
   background-color: rgb(243 244 246);
 }
 
+
+th {
+  /* max-width: 125px; */
+  /* min-width: 250px; */
+  /* padding: 0 !important; */
+  overflow-x: auto;
+  white-space: nowrap;
+  /* text-align: center !important; */
+}
+
+td {
+  /* height: 40px !important; */
+  /* padding: 5px !important; */
+  /* text-align: center !important; */
+}
+
 /*
 
 
