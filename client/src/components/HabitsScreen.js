@@ -21,7 +21,7 @@ function HabitScreen({ habits, mainHabit, setMainHabit, setHabits }) {
           severity="error"
           style={{ border: '1px solid red' }}
         >
-          Your habits table is empty.{' '}
+          You don't have any habits yet.{' '}
         </Alert>
         <Button
           component={Link}

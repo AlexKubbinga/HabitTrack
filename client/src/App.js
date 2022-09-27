@@ -12,7 +12,6 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Dashboard from './components/Dashboard';
 import HabitForm from './components/HabitForm';
 import Navbar from './components/Navbar';
-import HabitsTable from './components/HabitsTable';
 import HabitsScreen from './components/HabitsScreen';
 // import { getScoreByMonth } from './utils/activity';
 
@@ -50,7 +49,7 @@ function App() {
     <>
       <div className="App">
         <AppContext.Provider
-          value={{ habits, setHabits, mainHabit, setMainHabit }}
+          value={{ habits, setHabits, mainHabit, setMainHabit, averages }}
         >
           <Navbar />
 

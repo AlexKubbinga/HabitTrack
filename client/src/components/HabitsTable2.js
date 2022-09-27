@@ -17,7 +17,6 @@ import LinearProgress, {
 } from '@mui/material/LinearProgress';
 import StarIcon from '@mui/icons-material/Star';
 import { AppContext } from '../App';
-import { rootShouldForwardProp } from '@mui/material/styles/styled';
 import { DateTime } from 'luxon';
 
 function HabitsTable2({ habits, setMainHabit, mainHabit }) {
