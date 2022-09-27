@@ -14,7 +14,7 @@ import {
 
 function ActivityChart({ data }) {
   function CustomTooltip({ payload, label, active }) {
-    if (active) {
+    if (active && payload && payload.length) {
       return (
         <div className="border rounded">
           <p className=" text-black-500 text-md font-bold pl-2">

@@ -10,6 +10,7 @@ import {
 } from './apiService';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Dashboard from './components/Dashboard';
+import Login from './components/Login';
 import HabitForm from './components/HabitForm';
 import Navbar from './components/Navbar';
 import HabitsScreen from './components/HabitsScreen';
@@ -27,6 +28,7 @@ function App() {
   useEffect(() => {
     getMainHabit().then((res) => {
       setMainHabit(res);
+      // set loading false
     });
 
     getAverages().then((res) => {
@@ -49,13 +51,22 @@ function App() {
     <>
       <div className="App">
         <AppContext.Provider
-          value={{ habits, setHabits, mainHabit, setMainHabit, averages }}
+          value={{
+            habits,
+            setHabits,
+            mainHabit,
+            setMainHabit,
+            averages,
+            chartData,
+            details,
+          }}
         >
           <Navbar />
 
           <Routes>
+            <Route path="/" element={<Login />}></Route>
             <Route
-              path="/"
+              path="/dashboard"
               element={
                 <Dashboard
                   mainHabit={mainHabit}

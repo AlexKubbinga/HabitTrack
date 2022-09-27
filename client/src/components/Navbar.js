@@ -15,17 +15,20 @@ import Button from '@mui/material/Button';
 import { useState } from 'react';
 import { Menu } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const drawerWidth = 240;
-const navItems = [
-  { name: 'Dashboard', link: '/' },
-  { name: 'Habits', link: '/habits' },
-  { name: 'Create a Habit', link: '/newHabit' },
-];
 
-function NavBar(props) {
+function Navbar(props) {
+  const location = useLocation();
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const navItems = [
+    { name: 'Dashboard', link: '/dashboard' },
+    { name: 'Habits', link: '/habits' },
+    { name: 'Create a Habit', link: '/newHabit' },
+  ];
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -57,7 +60,7 @@ function NavBar(props) {
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
-  return (
+  return location.pathname === '/' ? null : (
     <Box sx={{ display: 'flex' }}>
       <AppBar position="static">
         <Toolbar>
@@ -113,4 +116,4 @@ function NavBar(props) {
   );
 }
 
-export default NavBar;
+export default Navbar;
