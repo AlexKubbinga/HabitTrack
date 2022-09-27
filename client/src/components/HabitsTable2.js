@@ -18,6 +18,7 @@ import LinearProgress, {
 import StarIcon from '@mui/icons-material/Star';
 import { AppContext } from '../App';
 import { rootShouldForwardProp } from '@mui/material/styles/styled';
+import { DateTime } from 'luxon';
 
 function HabitsTable2({ habits, setMainHabit, mainHabit }) {
   const { setHabits } = useContext(AppContext);
@@ -60,8 +61,16 @@ function HabitsTable2({ habits, setMainHabit, mainHabit }) {
                   {row.name}
                 </TableCell>
                 <TableCell align="center">{row.description}</TableCell>
-                <TableCell align="right">{row.start_date}</TableCell>
-                <TableCell align="right">{row.dates[row.length - 1]}</TableCell>
+                <TableCell align="right">
+                  {DateTime.fromISO(row.start_date).toLocaleString(
+                    DateTime.DATE_FULL
+                  )}
+                </TableCell>
+                <TableCell align="right">
+                  {DateTime.fromISO(row.end_date).toLocaleString(
+                    DateTime.DATE_FULL
+                  )}
+                </TableCell>
                 <TableCell align="right">{row.length} days</TableCell>
                 <TableCell align="right">
                   <BorderLinearProgress
@@ -110,10 +119,11 @@ function HabitsTable2({ habits, setMainHabit, mainHabit }) {
                       await deleteHabit(row.name);
                       if (row.name === mainHabit[0].name) {
                         setMainHabit([]);
+                      } else {
+                        getHabits().then((res) => {
+                          setHabits(res);
+                        });
                       }
-                      getHabits().then((res) => {
-                        setHabits(res);
-                      });
                     }}
                   />
                 </TableCell>
