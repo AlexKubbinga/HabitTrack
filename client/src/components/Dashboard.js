@@ -2,7 +2,7 @@ import '../App.css';
 import ActivityChart from './ActivityChart';
 import { getPersonalInfo, getScoreByMonth } from '../apiService';
 import Typography from '@mui/material/Typography';
-import StatCard from './statCard';
+import StatCard from './StatCard';
 import Card from '@mui/material/Card';
 import { ResponsiveContainer } from 'recharts';
 import { height } from '@mui/system';

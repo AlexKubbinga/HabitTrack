@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { AppContext } from '../App';
-import StatCard from './statCard';
+import StatCard from './StatCard';
 
 function CardsGrid() {
   const { averages } = useContext(AppContext);
