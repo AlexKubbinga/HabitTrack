@@ -1,5 +1,3 @@
-const dt = require('luxon');
-const DateTime = dt.DateTime;
 /*
 Purpose: create array of dates in format
  where each date matches Oura API day field
@@ -32,10 +30,5 @@ function createDateArray(start_date, length) {
   }
   return dateArray; // ["2022-08-28" ... "2022-09-28"]
 }
-
-today = new Date(new Date().toISOString().slice(0, 10));
-
-console.log(DateTime.fromISO('2016-05-25').toLocaleString(DateTime.DATE_FULL));
-DateTime.fromISO('2016-05-25').toLocaleString(DateTime.DATE_FULL);
 
 module.exports = { createDateArray, getEndDate };

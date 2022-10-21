@@ -40,8 +40,7 @@ function HabitsTable({ habits, setMainHabit, mainHabit }) {
         className="overflow-x-auto mx-auto m-10 max-w-4xl"
         style={{
           maxWidth: { xs: '400px', sm: '800px' },
-        }}
-      >
+        }}>
         <Table>
           <TableHead>
             <TableRow>
@@ -79,7 +78,7 @@ function HabitsTable({ habits, setMainHabit, mainHabit }) {
                   />
                 </TableCell>
                 <TableCell align="center" style={{ minWidth: '180px' }}>
-                  {row.name === mainHabit[0]?.name ? ( // check if its the mainhabit
+                  {row.name === mainHabit[0]?.name ? (
                     <>
                       <StarIcon
                         sx={{ textAlign: 'center' }}
@@ -99,11 +98,8 @@ function HabitsTable({ habits, setMainHabit, mainHabit }) {
                           updateMainHabit(mainHabit[0]?.name, row.name);
                           let newRow = row;
                           newRow.main_habit = true;
-                          // change old main habit in Habits to false
-                          //change old main habit in
                           setMainHabit([newRow]);
-                        }}
-                      >
+                        }}>
                         Set as Main Habit
                       </Button>
                     </>
@@ -115,7 +111,6 @@ function HabitsTable({ habits, setMainHabit, mainHabit }) {
                       left: '8px',
                     }}
                     onClick={async () => {
-                      console.log('DELETED');
                       await deleteHabit(row.name);
                       if (row.name === mainHabit[0].name) {
                         setMainHabit([]);

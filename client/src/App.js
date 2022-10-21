@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import { useState, useEffect, createContext } from 'react';
 import {
@@ -14,7 +13,6 @@ import Login from './components/Login';
 import HabitForm from './components/HabitForm';
 import Navbar from './components/Navbar';
 import HabitsScreen from './components/HabitsScreen';
-// import { getScoreByMonth } from './utils/activity';
 
 export const AppContext = createContext();
 
@@ -28,7 +26,6 @@ function App() {
   useEffect(() => {
     getMainHabit().then((res) => {
       setMainHabit(res);
-      // set loading false
     });
 
     getAverages().then((res) => {
@@ -59,8 +56,7 @@ function App() {
             averages,
             chartData,
             details,
-          }}
-        >
+          }}>
           <Navbar />
 
           <Routes>
@@ -74,8 +70,7 @@ function App() {
                   data={chartData}
                   averages={averages}
                 />
-              }
-            ></Route>
+              }></Route>
             <Route
               path="/habits"
               element={
@@ -83,10 +78,8 @@ function App() {
                   habits={habits}
                   mainHabit={mainHabit}
                   setMainHabit={setMainHabit}
-                  setHabits
-                ></HabitsScreen>
-              }
-            ></Route>
+                  setHabits></HabitsScreen>
+              }></Route>
             <Route path="/newHabit" element={<HabitForm />}></Route>
           </Routes>
         </AppContext.Provider>

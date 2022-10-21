@@ -31,7 +31,6 @@ export function getPersonalInfo() {
 }
 
 export function getDailyActivity() {
-  // by default end_date is current date therefore only need start
   return fetch(`${rootUrl}/activity`)
     .then((response) => response.json())
     .catch((error) => console.log('error', error));
@@ -92,4 +91,10 @@ export function deleteHabit(habitName) {
   return fetch(`${rootUrl}/deleteHabit?${query}`, requestOptions)
     .then((res) => res.json())
     .catch((err) => console.log('error', err));
+}
+
+export function oAuthRequest() {
+  return fetch(`${rootUrl}/auth`)
+    .then((res) => res.json())
+    .then((res) => console.log(res));
 }

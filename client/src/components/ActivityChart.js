@@ -41,11 +41,10 @@ function ActivityChart({ data }) {
   return (
     <ResponsiveContainer height={500}>
       <LineChart
-        width={900} //get screen width  //listen to window resize event
+        width={900}
         height={500}
         data={data}
-        margin={{ top: 5, right: 20, bottom: 50, left: 30 }}
-      >
+        margin={{ top: 5, right: 20, bottom: 50, left: 30 }}>
         <Line type="monotone" dataKey="baseline" stroke="#808080" dot={false} />
         <Line type="monotone" dataKey="habit" stroke="#3482F6" />
         <XAxis
@@ -53,8 +52,7 @@ function ActivityChart({ data }) {
           label={{
             value: 'Day',
             position: 'bottom',
-          }}
-        ></XAxis>
+          }}></XAxis>
         <YAxis
           label={{
             value: 'Score',

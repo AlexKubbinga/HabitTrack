@@ -24,7 +24,7 @@ export function getAvgByMonth(data, metric) {
   let month;
   for (const day of data) {
     month = DateTime.fromISO(day.timestamp).monthLong;
-    // console.log(`${day.timestamp} + week: ${month} + metric ${day[metric]}`);
+
     if (!monthData[month]) {
       monthData[month] = day[metric];
       if (monthData[priorMonth]) {

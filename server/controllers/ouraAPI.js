@@ -1,5 +1,8 @@
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
+const { getAverage } = require('../utils/averages');
+const Habit = require('../models/habit');
+
 const PAT = process.env.PAT; // multiple users could pull key from DB
 
 var myHeaders = new Headers();
@@ -9,14 +12,7 @@ var requestOptions = {
   headers: myHeaders,
 };
 
-const { getAverage } = require('../utils/averages');
-
-const Habit = require('../models/habit');
-
 const rootUrl = 'https://api.ouraring.com/v2/usercollection/';
-
-// TODO
-// should we move formatting from API data to usable to the server side?
 
 const getDailyActivity = async (req, res) => {
   try {
@@ -82,12 +78,9 @@ const getAverages = async (req, res) => {
   }
 };
 
-//TODO refactor so that there are functions to get endpoints in oura Models
 const getHabitData = async (req, res) => {
-  // receive metric and start_date of habit
   const { habit_name } = req.query;
   const habit = await Habit.findOne({ name: habit_name });
-  // console.log(habit);
   let habitData; // habit data from oura
   let baseline; // avg of past 3 months from oura
   let code;
@@ -99,13 +92,6 @@ const getHabitData = async (req, res) => {
   base_start_date.setDate(base_start_date.getDate() + Number(-90));
   base_start_date = base_start_date.toISOString().slice(0, 10);
 
-  // if habit start is in future then wont work
-  // send relevant message back to front end so can tell user this.
-  // if (new Date(habit.start_date) > new Date(Date.now())) {
-  //   habit.start_date = new Date(Date.now()).toISOString().slice(0, 10);
-  // }
-
-  // fetch API data
   baseline = await fetch(
     `${rootUrl}${daily_metric}?start_date=${base_start_date}&end_date=${habit.start_date}`,
     requestOptions
@@ -117,11 +103,7 @@ const getHabitData = async (req, res) => {
   const scoreAvg = getAverage(baseline).toFixed(0);
 
   const baseline_array = new Array(habit.length).fill(scoreAvg);
-  // console.log(baseline_array);
 
-  // will fetch too much data if end_date is before today
-
-  //TODO
   habitData = await fetch(
     `${rootUrl}${daily_metric}?start_date=${habit.start_date}&end_date=${habit.end_date}`,
     requestOptions
@@ -132,17 +114,13 @@ const getHabitData = async (req, res) => {
     })
     .catch((error) => console.log('error', error));
 
-  // console.log('response code from API', code);
-  console.log('HABITDATA: ', habitData);
-
   habitData = habitData.data.map((day) => {
     return { score: day.score, date: day.day };
   });
 
-  console.log(habitData);
-
   const dataArray = [];
   let habitCounter = 0;
+
   // adds habitData to the correct day (not just at the beginning if ring wasn't worn for a few days)
   for (let i = 0; i < habit.length; i++) {
     const temp = {};
@@ -155,7 +133,6 @@ const getHabitData = async (req, res) => {
     }
     dataArray.push(temp);
   }
-  console.log(dataArray);
   res.status(200).send(dataArray);
 };
 

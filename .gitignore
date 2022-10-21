@@ -1,5 +1,6 @@
 #ENV
 .env
+/node_modules
 
 #Oura API Details
 openapi.json

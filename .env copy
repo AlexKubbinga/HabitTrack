@@ -1,5 +1,5 @@
 # PAT = This is where you put Oura API key.
-# If don't have Oura device, can't use API calls.
-# I can give you mine however for refactoring purposes.
+# If don't have Oura device, can't use API calls to Oura.
+#Future deployment will allow for oAuth instead
 
 # PORT = This is where you put the port of server

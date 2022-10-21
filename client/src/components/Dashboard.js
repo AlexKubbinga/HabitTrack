@@ -37,17 +37,13 @@ function Dashboard({ details, data, mainHabit, averages }) {
             <Card
               className="font-light p-4 m-5"
               variant="outlined"
-              sx={{ maxWidth: '90%', width: '1200px' }}
-            >
+              sx={{ maxWidth: '90%', width: '1200px' }}>
               <h1 className="text-4xl font mb-4 border-slate-500 border-solid  text-center flex justify-center">
                 <div className="bg-blue-100 rounded-lg w-fit px-3">
                   <span className="text-3xl font-bold  ">Current Habit:</span>
-
-                  {/* <Typography sx={{ display: 'inline' }}> */}
                   <span className="text-2xl">
                     &nbsp;{mainHabit[0].description}
                   </span>
-                  {/* </Typography> */}
                 </div>
               </h1>
               <ActivityChart data={data}></ActivityChart>
@@ -72,8 +68,7 @@ function Dashboard({ details, data, mainHabit, averages }) {
             flexDirection: 'column',
             display: 'flex',
             justifyContent: 'center',
-          }}
-        >
+          }}>
           <h1 className="text-4xl font mb-4 border-slate-500 border-solid  text-center flex justify-center">
             <div className="bg-red-100 rounded-lg w-fit px-3">
               <ErrorIcon
@@ -97,8 +92,7 @@ function Dashboard({ details, data, mainHabit, averages }) {
             style={{
               textTransform: 'none',
             }}
-            sx={{}}
-          >
+            sx={{}}>
             Click Here to Create a Habit
           </Button>
         </Card>

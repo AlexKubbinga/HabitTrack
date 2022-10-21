@@ -60,9 +60,8 @@ function HabitForm() {
         setMainHabit([data]);
       }
 
-      const created = await createHabit(data); // habit created
+      const created = await createHabit(data);
 
-      // case when habits exist and want to set as current
       if (data.main_habit === 'true' && !firstFlag) {
         updateMainHabit(mainHabit[0].name, data.name);
         setMainHabit([data]);
@@ -74,8 +73,6 @@ function HabitForm() {
     }
     setInputState(initialState);
     navigate('/habits');
-
-    // if created (change screen or success message)
   };
 
   return (
@@ -83,8 +80,7 @@ function HabitForm() {
       <div className="">
         <form
           className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-          onSubmit={handleSubmit(onSubmit)}
-        >
+          onSubmit={handleSubmit(onSubmit)}>
           <h1 className="text-3xl font-extrabold text-blue-500">
             Create a new habit
           </h1>
@@ -98,8 +94,7 @@ function HabitForm() {
           )}
           <label
             className="block text-gray-700 text-md font-bold mb-2"
-            htmlFor="name"
-          >
+            htmlFor="name">
             Habit Name
           </label>
           <input
@@ -122,8 +117,7 @@ function HabitForm() {
           )}
           <label
             className="block text-gray-700 text-md font-bold mb-2"
-            htmlFor="description"
-          >
+            htmlFor="description">
             Description
           </label>
           <textarea
@@ -133,8 +127,7 @@ function HabitForm() {
             type="text"
             placeholder="Write 3 things I am grateful for each day"
             value={inputState.description}
-            onChange={handleChange}
-          ></textarea>
+            onChange={handleChange}></textarea>
           {errors.description && (
             <div className="mb-1 mt-0 p-0">
               <ErrorIcon className="text-red-700 block mx-1 pb-1" />
@@ -143,8 +136,7 @@ function HabitForm() {
           )}
           <label
             className="block text-gray-700 text-md font-bold mb-2"
-            htmlFor="start_date"
-          >
+            htmlFor="start_date">
             Start Date
           </label>
           <input
@@ -163,8 +155,7 @@ function HabitForm() {
           )}
           <label
             className="block text-gray-700 text-md font-bold mb-2"
-            htmlFor="length"
-          >
+            htmlFor="length">
             Length of Habit
           </label>
           <div>
@@ -177,8 +168,7 @@ function HabitForm() {
               placeholder="30"
               value={inputState.length}
               onChange={handleChange}
-              style={{ display: 'inline' }}
-            ></input>
+              style={{ display: 'inline' }}></input>
             <span className="ml-2">days</span>
           </div>
           {errors.length && (
@@ -199,8 +189,7 @@ function HabitForm() {
             />
             <label
               htmlFor="Sleep"
-              className="ml-3 block text-md font-medium text-gray-700"
-            >
+              className="ml-3 block text-md font-medium text-gray-700">
               Sleep
             </label>
           </div>
@@ -216,8 +205,7 @@ function HabitForm() {
             />
             <label
               htmlFor="Activity"
-              className="ml-3 block text-md font-medium text-gray-700"
-            >
+              className="ml-3 block text-md font-medium text-gray-700">
               Activity
             </label>
           </div>
@@ -229,7 +217,7 @@ function HabitForm() {
               </p>
             </div>
           )}
-          {/* this will only show if its not the first habit */}
+
           {habits.length > 0 && (
             <>
               <p className="block text-gray-700 text-md font-bold my-2">
@@ -247,8 +235,7 @@ function HabitForm() {
                 />
                 <label
                   htmlFor="true"
-                  className="ml-3 block text-md font-medium text-gray-700"
-                >
+                  className="ml-3 block text-md font-medium text-gray-700">
                   Yes
                 </label>
               </div>
@@ -264,8 +251,7 @@ function HabitForm() {
                 />
                 <label
                   htmlFor="false"
-                  className="ml-3 block text-md font-medium text-gray-700"
-                >
+                  className="ml-3 block text-md font-medium text-gray-700">
                   No
                 </label>
               </div>{' '}
@@ -274,8 +260,7 @@ function HabitForm() {
           <br></br>
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="submit"
-          >
+            type="submit">
             Submit
           </button>
         </form>
