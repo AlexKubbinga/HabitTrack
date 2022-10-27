@@ -12,7 +12,7 @@ function StatCard({ average }) {
         <Card variant="outlined">
           <CardContent>
             <Typography variant="h10" color="text.secondary" gutterBottom>
-              <strong className="text-blue-500">{average.name} score</strong>
+              <strong className="text-blue-500">{average.name} score </strong>
             </Typography>
             <Typography variant="h5" component="div">
               {average.avg}
