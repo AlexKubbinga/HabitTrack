@@ -1,7 +1,6 @@
 import './App.css';
 import { useState, useEffect, createContext } from 'react';
 import {
-  getPersonalInfo,
   getCurrentHabitChartData,
   getMainHabit,
   getHabits,

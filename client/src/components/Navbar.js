@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -13,7 +12,6 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
-import { Menu } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
@@ -47,8 +45,7 @@ function Navbar(props) {
             <ListItemButton
               component={Link}
               to={item.link}
-              sx={{ textAlign: 'center' }}
-            >
+              sx={{ textAlign: 'center' }}>
               <ListItemText primary={item.name} />
             </ListItemButton>
           </ListItem>
@@ -69,15 +66,13 @@ function Navbar(props) {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
-          >
+            sx={{ mr: 2, display: { sm: 'none' } }}>
             <MenuIcon />
           </IconButton>
           <Typography
             variant="h6"
             component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-          >
+            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
             HabitTrack
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
@@ -86,8 +81,7 @@ function Navbar(props) {
                 key={item.name}
                 component={Link}
                 to={item.link}
-                sx={{ color: '#fff', mr: 2 }}
-              >
+                sx={{ color: '#fff', mr: 2 }}>
                 {item.name}
               </Button>
             ))}
@@ -107,8 +101,7 @@ function Navbar(props) {
               boxSizing: 'border-box',
               width: drawerWidth,
             },
-          }}
-        >
+          }}>
           {drawer}
         </Drawer>
       </Box>
