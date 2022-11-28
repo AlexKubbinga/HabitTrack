@@ -12,6 +12,7 @@ import Login from './components/Login';
 import HabitForm from './components/HabitForm';
 import Navbar from './components/Navbar';
 import HabitsScreen from './components/HabitsScreen';
+import Registration from './components/Registration';
 
 export const AppContext = createContext();
 
@@ -60,6 +61,7 @@ function App() {
 
           <Routes>
             <Route path="/" element={<Login />}></Route>
+            <Route path="/register" element={<Registration />}></Route>
             <Route
               path="/dashboard"
               element={

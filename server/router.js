@@ -18,7 +18,6 @@ router.get('/validateHabit', habitController.validateHabit);
 router.delete('/deleteHabit', habitController.deleteHabit);
 
 //Authenitcation
-router.get('/callback', authController.handleCallback);
-router.get('/auth', authController.oAuthRequest);
+router.get('/ouraCallback', authController.getAccessCode);
 
 module.exports = router;
