@@ -22,7 +22,7 @@ function Login() {
         <p className="mt-16 mb-4 font-extrabold text-black">
           Log in with Oura:
         </p>
-        <a href="https://cloud.ouraring.com/oauth/authorize?response_type=code&client_id=PFJ3IHOSIJDUSZCQ&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fdashboard&state=alex">
+        <a href="https://cloud.ouraring.com/oauth/authorize?response_type=code&client_id=PFJ3IHOSIJDUSZCQ&redirect_uri=http%3A%2F%2Flocalhost%3A3002%2FouraCallback&state=userAuth">
           <button className="">
             <img
               src={oura}

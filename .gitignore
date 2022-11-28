@@ -1,6 +1,8 @@
 #ENV
 .env
 /node_modules
+venv
+__pycache__
 
 #Oura API Details
 openapi.json
